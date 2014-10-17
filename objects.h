@@ -22,7 +22,7 @@ class object{
  	int mass;   //for gravity? dont know if thats going to happen or more specifically, how
 	string id;  //if it matters, probably not going to be handling it a lot so it most likely won't 
 
-   // S/O/L for scaling, orienting, and locating the object in the scene
+   // S/O/L for scaling, orienting, and locating the object in the scene - for transforming the object
 
 	vec3 scale;
 	vec3 orient; 
@@ -69,7 +69,7 @@ void object::genship(shiptype t, color c){
 	case green:  for(int i = 0; i < points.size(); i++) colors = vec3(0.0,1.0,0.0); break;
 	case blue:   for(int i = 0; i < points.size(); i++) colors = vec3(0.0,0.0,1.0); break;
 	case purple: for(int i = 0; i < points.size(); i++) colors = vec3(0.5,0.0,0.5); break;
-	case brown: 
+	case brown:  for(int i = 0; i < points.size(); i++) colors = vec3(0.9,0.7,0.2); break;
 	case black:  for(int i = 0; i < points.size(); i++) colors = vec3(0.0,0.0,0.0); break;
 	case white:  for(int i = 0; i < points.size(); i++) colors = vec3(1.0,1.0,1.0); break;
 	case grey:   for(int i = 0; i < points.size(); i++) colors = vec3(0.5,0.5,0.5); break;
