@@ -5,24 +5,26 @@ using std::vector;
 
 enum color{red, orange, yellow, green, blue, purple, brown, black, white, grey};
 
-enum type{spiral_sphere, regular_sphere, ship};
+enum type{currently_undefined, error, spiral_sphere, regular_sphere, ship};
 
 vector<vec3> ship_spoints[] = {};
-vector<vec3> ship_mpoints[] = {};
+vector<vec3> ship_mpoints[] = {}; //these are going to need to be implemented yet
 vector<vec3> ship_lpoints[] = {};
 
+vector<vec3> error[] = {(-0.5, 0.5, 0.0), ( 0.5,  0.5, 0.0), (-0.5, -0.5, 0.0), //to have a visual representation of a
+						( 0.5, 0.5, 0.0), (-0.5, -0.5, 0.0), ( 0.5, -0.5, 0.0)} 
 
-class object{
+class Object{
 
     public:
+    Object();
 
    //=============================
    // generating & coloring points
    //=============================
+	void genship(char type); //copies the points for the selected type of ship
 
-	void genship(char type); //copies the points for 
-
-	void gensphere(char type, int theta_subdivisions, int phi_subdivisions); //makes this object a unit sphere
+	int gensphere(char type, int theta_subdivisions, int phi_subdivisions); //makes this object a unit sphere
 	//types include "r" and "s" currently, where r is regular and s is spiral;
 
 
@@ -49,8 +51,10 @@ class object{
 
 	int numpoints; //number of points in the model
 
-	vector<vec3> points; //holds the points
-	vector<vec3> colors; //holds the points' colors
+	vector<vec3> *points; //holds the points
+	vector<vec3> *colors; //holds the points' colors
+
+	void output(); //some of the code from gensphere() might need to move here
 
     private:
 
