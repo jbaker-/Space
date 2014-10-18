@@ -17,7 +17,7 @@ void myinit(){ //get points
 }
 
 void init(){ //set up buffers, shaders
-
+t 
     GLuint vao; //vertex array object
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
