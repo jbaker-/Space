@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <Angel.h>
+#include <cstdlib>
 using std::vector;
 
 enum color{red, orange, yellow, green, blue, purple, brown, black, white, grey};
@@ -28,11 +29,17 @@ class Object{
 	//types include "r" and "s" currently, where r is regular and s is spiral;
 
 
-	void perturb_surface(float roughness); //used for roughening the surface of the sphere, but theres no reason you couldnt do it to a ship
-		// should totally do that once I get a bit further, values for roughness determine maximum for a random offset from the origin
-		// e.g. v += roughness value * v  so keep the number small if you want it to look reasonable for that planet surface thing
+	void perturb_surface(float roughness); //used for roughening the surface of the sphere, but theres no reason 
+		// you couldnt do it to a ship - should totally do that once I get a bit further 
+	    // values for roughness determine maximum for a random offset from the origin
+		//
+		// 	e.g. v += roughness value * v  so probably limit it to .05 or thereabouts
+		//
+		// note: probably not best to use this on a "regular sphere", itll offset the triangles' verticies 
+		//			individually rather than in a coherent fashion
 
-	void color_points(color c);
+	void color_points(color c, bool rand, float weight); //if rand is true, the colors will be given 
+		//a random offset per vertex based upon the value of weight
 
    //===========
    // misc - wip

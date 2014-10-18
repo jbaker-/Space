@@ -126,9 +126,9 @@ int Object::gensphere(char type, int theta_subdivisions, int phi_subdivisions){
  
 		case "s":	//spiral sphere, kind of a helix - its an experiment, I thought it might be cool
 
-			phi_increment = phi_increment / theta_subdivisions; //made smaller so that durring one revolution
-				//itll be incrementally moving towards making a step of the same distance that would have been 
-				//taken - the original phi increment
+			phi_increment = phi_increment / theta_subdivisions; //made smaller and incremented in the inner loop 
+				//so that durring one revolution itll be incrementally moving towards making a step of the same 
+				//distance that would have been taken in the outer loop - the regular sphere's phi increment
 
 			for (int i = 0; i < phi_subdivisions; i++){
 
@@ -146,22 +146,43 @@ int Object::gensphere(char type, int theta_subdivisions, int phi_subdivisions){
 
 			id = spiral_sphere;
 
+			//Output points as triangle strip - this may need to be rewritten better
+
 			points = new std::vector<vec3>;
 
-			int pointloc1 = temp_points[0];
-			int pointloc2 = temp_points[1];
+			std::vector::iterator pointloc1 = temp_points.begin(); //higher up the sphere
+			std::vector::iterator pointloc2 = temp_points.begin(); //lower down the sphere (one row lower)
+
+			points.push_back(*pointloc1);
+			points.push_back(*pointloc1); //initiate the triangle strip, this'd be easier as a fan but
+			points.push_back(*pointloc1); //the goal is to have it just be one draw call	
+
+			pointloc2++;
 
 			for(int k = 0; k < theta_subdivisions; k++){
-				points.push_back(temp_points[pointloc1]);
+				points.push_back(*pointloc2);
+				pointloc2++;		//the triangle strip equivalent to a triangle fan
+				points.push_back(*pointloc1);
+			} 
 
-				if(!(k < theta_subdivisions)){
-					pointloc1 += 2; 	//first row doesnt get this - there are a few wasted triangles but its
-										//only one draw call instead of three to split it up into fans and a strip
+			for(int l = 0; l < ((phi_subdivisions - 2) * theta_subdivisions); l++){
+				points.push_back(*pointloc2);
+				pointloc2++;
+				points.push_back(*pointloc1); //main body of the sphere - everything but the two ends
+				pointloc2++;
+			}
+
+			pointloc2 = temp_points.end();
+
+			for(int m = 0; m < theta_subdivisions; m++){
+				points.push_back(*pointloc1);
+
+				if(pointloc1 < pointloc2){
+					pointloc1++;
 				}
 
-				points.push_back(temp_points[pointloc2]);
-				pointloc2 += 2;
-			} 
+				points.push_back(*pointloc2);
+			}
 
 			break;
 
@@ -191,9 +212,9 @@ void Object::perturb_surface(float roughness){
 
 void Object::genship(char type){
     switch(t){
-		case "s": points = ship_spoints; break;
-		case "m": points = ship_mpoints; break;
-		case "l": points = ship_lpoints; break;
+		case "s": points = new std::vector<vec3>(ship_spoints, ship_spoints + sizeof(ship_spoints) / sizeof(vec3)); break;
+		case "m": points = new std::vector<vec3>(ship_mpoints, ship_mpoints + sizeof(ship_mpoints) / sizeof(vec3)); break;
+		case "l": points = new std::vector<vec3>(ship_lpoints, ship_lpoints + sizeof(ship_lpoints) / sizeof(vec3)); break;
 		default:
 			std::cout << "Please use a valid identifier when entering genship() parameters" << endl;
 			std::cout << "You entered > \"" << type << "\"" << endl;
@@ -209,7 +230,23 @@ void Object::genship(char type){
 
 }
 
-void Object::color_points(color c){
+void Object::color_points(color c, bool rand, float weight){
+
+	if(weight < 0){
+		std::cout << "Please use a postiive value when entering weight for color_points()" << endl;
+		return;
+	}
+
+	if(points == NULL){
+		std::cout << "No points found, color_points() exited" << endl;
+		return;
+	}
+
+	if(colors != NULL){
+		delete colors;
+
+		colors = new std::vector<vec3>;
+	}
 
 	vec3 current_color;
     
@@ -228,9 +265,24 @@ void Object::color_points(color c){
 			std::cout << "Please use a valid identifier when using color_points() parameters" << endl;
     }
 
-    for(int i = 0; i < points.size(); i++)
-    	colors[i] = current_color;
+    if(rand){
+
+	    srand(sizeof(colors));
+
+	    for (int i = 0; i < points.size(); i++){
+	    	colors.push_back(new vec3( current_color.x * 1/rand(), current_color.y * 1/rand(), current_color.z =  ))
+	    }
+
+
+	}else{
+
+    	for(int i = 0; i < points.size(); i++)
+    		colors.push_back(current_color);
+
+	}
+
 //takes the color value and colors all points within the object and gives them all a solid color with that value
+
 }
 
 void Object::place_in_world(vec3 scale_factor, vec3 orientation, vec3 location){
