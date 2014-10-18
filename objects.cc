@@ -269,8 +269,21 @@ void Object::color_points(color c, bool rand, float weight){
 
 	    srand(sizeof(colors));
 
+	    float new_r;
+	    float new_g;
+	    float new_b;
+
 	    for (int i = 0; i < points.size(); i++){
-	    	colors.push_back(new vec3( current_color.x * 1/rand(), current_color.y * 1/rand(), current_color.z =  ))
+
+	    	new_r = current_color.x * weight * (1 + ((rand() % 5) - 2) / 5.0);
+	    	new_g = current_color.y * weight * (1 + ((rand() % 5) - 2) / 5.0);
+	    	new_b = current_color.z * weight * (1 + ((rand() % 5) - 2) / 5.0);
+
+	    	if(new_r <= 1.0 && new_g <= 1.0 && new_b <= 1.0)
+	    		colors.push_back(vec3(new_r, new_g, new_b));
+	    	else
+	    		colors.push_back(current_color);
+
 	    }
 
 

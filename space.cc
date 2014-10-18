@@ -1,18 +1,26 @@
-#include <iostream>
+#include <iostream>: 
 #include "objects.h" //class definition for objects 
 using std::cout;
 
 
 
+vec3 *all_points; //pointer to array of all points in the scene
+vec3 *all_colors; //pointer to colors array
 
-int numpoints = 0;
-
-vec3 points[numpoints];
+vec3 *all_scales; //pointer to all scale factors
+vec3 *all_orients; //pointer to all orient factors
+vec3 *all_locations; //pointer to all locate factors
 
 
 void myinit(){ //get points
 
     //output functions for the objects ---> points[]
+
+    Object object1;
+
+    object1.gensphere(r, 10, 10);
+
+    object1.color_points(grey, true, 0.05);
 
 }
 
@@ -27,7 +35,7 @@ t
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
     //glBufferData()
    
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(all_points), all_points);
 }
 
 extern "C" void display(){
