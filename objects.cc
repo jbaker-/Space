@@ -212,9 +212,17 @@ void Object::perturb_surface(float roughness){
 
 void Object::genship(char type){
     switch(t){
-		case "s": points = new std::vector<vec3>(ship_spoints, ship_spoints + sizeof(ship_spoints) / sizeof(vec3)); break;
-		case "m": points = new std::vector<vec3>(ship_mpoints, ship_mpoints + sizeof(ship_mpoints) / sizeof(vec3)); break;
-		case "l": points = new std::vector<vec3>(ship_lpoints, ship_lpoints + sizeof(ship_lpoints) / sizeof(vec3)); break;
+		case "s": points = new std::vector<vec3>(ship_spoints, ship_spoints + sizeof(ship_spoints) / sizeof(vec3)); 
+				  colors = new std::vector<vec3>(ship_scolors, ship_scolors + sizeof(ship_scolors) / sizeof(vec3)); 
+				  break;
+
+		case "m": points = new std::vector<vec3>(ship_mpoints, ship_mpoints + sizeof(ship_mpoints) / sizeof(vec3)); 
+		          colors = new std::vector<vec3>(ship_mcolors, ship_mcolors + sizeof(ship_mcolors) / sizeof(vec3)); 
+		          break;
+
+		case "l": points = new std::vector<vec3>(ship_lpoints, ship_lpoints + sizeof(ship_lpoints) / sizeof(vec3)); 
+				  colors = new std::vector<vec3>(ship_lcolors, ship_lcolors + sizeof(ship_lcolors) / sizeof(vec3)); 
+				  break;
 		default:
 			std::cout << "Please use a valid identifier when entering genship() parameters" << endl;
 			std::cout << "You entered > \"" << type << "\"" << endl;
@@ -241,6 +249,9 @@ void Object::color_points(color c, bool rand, float weight){
 		std::cout << "No points found, color_points() exited" << endl;
 		return;
 	}
+
+
+
 
 	if(colors != NULL){
 		delete colors;

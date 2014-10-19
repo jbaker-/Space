@@ -3,7 +3,6 @@
 using std::cout;
 
 
-
 vec3 *all_points; //pointer to array of all points in the scene
 vec3 *all_colors; //pointer to colors array
 
@@ -25,7 +24,9 @@ void myinit(){ //get points
 }
 
 void init(){ //set up buffers, shaders
-t 
+
+    GLuint total_size = sizeof(all_points) + sizeof(all_colors);
+
     GLuint vao; //vertex array object
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -46,10 +47,74 @@ extern "C" void display(){
 
 }
 
+extern "C" void timerFunc(int value){
+    
+}
+
+extern "C" void keyboard(unsigned char key, int x, int y){
+
+    switch(key){
+
+        case 033:
+            exit(EXIT_SUCCESS); //escape key to exit
+            break;
+
+        case "W":
+        case "w": //up
+        break;
+
+        case "S":
+        case "s": //down
+        break;
+
+        case "A":
+        case "a": //left
+        break;
+
+        case "D":
+        case "d": //right
+        break;
+
+        case "E":
+        case "e": //roll clockwise
+        break;
+
+        case "Q":
+        case "q": //roll counter-clockwise
+        break;
+
+        case "+": //apply positive thrust
+        break;
+
+        case "-": //apply negative thrust
+        break;
+
+    }
+
+    glutPostRedisplay();
+
+}
+
 int main(void){
 
 
-    return 0;
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH);
+
+    glutInitWindowSize(640, 480);
+    glutCreateWindow("Space, the final frontier");
+
+    glewInit();
+
+    myinit(); //get all the points generated
+    init();   //get all the buffers allocated, and points and associated data loaded in
+
+    glutDisplayFunc(display);
+    glutKeyboardFunc(keyboard);
+
+    glutMainLoop();
+
+    return(EXIT_SUCCESS);
 
 }
 
