@@ -1,25 +1,30 @@
 #include <iostream>: 
 #include "objects.h" //class definition for objects 
+#include <Angel.h>
 using std::cout;
 
 
 vec3 *all_points; //pointer to array of all points in the scene
 vec3 *all_colors; //pointer to colors array
 
-vec3 *all_scales; //pointer to all scale factors
-vec3 *all_orients; //pointer to all orient factors
-vec3 *all_locations; //pointer to all locate factors
+Object main;
 
 
 void myinit(){ //get points
 
     //output functions for the objects ---> points[]
 
-    Object object1;
+    main = new Object();
 
-    object1.gensphere(r, 10, 10);
 
-    object1.color_points(grey, true, 0.05);
+    // object.gensphere(r, 10, 10);
+
+    // object.color_points(grey, true, 0.05);
+
+    //once all points are present, give each object a starting index and an ending index to use in the draw() function
+    //also make sure each knows whether to use GL_TRIANGLES or GL_TRIANGLE_STRIP, etc 
+    //e.g. draw() leads to a call of glDrawArrays(primitivetype, start, end)
+
 
 }
 
@@ -44,6 +49,9 @@ extern "C" void display(){
     glClear(GL_COLOR_BUFFER_BIT);  
     //glDrawArrays(GL_TRIANGLES, 0, numpoints);
     glFlush();
+
+    //get this down to one call main.draw()
+    //which calls draw() on each of its children
 
 }
 
@@ -75,13 +83,13 @@ extern "C" void keyboard(unsigned char key, int x, int y){
         case "d": //right
         break;
 
-        case "E":
-        case "e": //roll clockwise
-        break;
+        // case "E":
+        // case "e": //roll clockwise
+        // break;
 
-        case "Q":
-        case "q": //roll counter-clockwise
-        break;
+        // case "Q":
+        // case "q": //roll counter-clockwise
+        // break;
 
         case "+": //apply positive thrust
         break;

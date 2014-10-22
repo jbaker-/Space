@@ -12,8 +12,10 @@ vector<vec3> ship_spoints[] = {};
 vector<vec3> ship_mpoints[] = {}; //these are going to need to be implemented yet
 vector<vec3> ship_lpoints[] = {};
 
-vector<vec3> error[] = {(-0.5, 0.5, 0.0), ( 0.5,  0.5, 0.0), (-0.5, -0.5, 0.0), //to have a visual representation of a
-						( 0.5, 0.5, 0.0), (-0.5, -0.5, 0.0), ( 0.5, -0.5, 0.0)} 
+vector<vec3> error = {(-0.5, 0.5, 0.0), ( 0.5,  0.5, 0.0), (-0.5, -0.5, 0.0), //to have a visual representation of a
+					  ( 0.5, 0.5, 0.0), (-0.5, -0.5, 0.0), ( 0.5, -0.5, 0.0)} 
+
+vector<vec3> default_cube = {}
 
 class Object{
 
@@ -70,6 +72,10 @@ class Object{
 	vec3 scale;
 	vec3 orient; 
 	vec3 locate;
+
+	GLuint primitive;
+	int start_index;
+	int end_index;
 
 
 };

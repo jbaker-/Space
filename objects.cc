@@ -5,6 +5,8 @@ Object::Object(){
 
 	points = NULL;
 	colors = NULL;
+
+	primitive = GL_TRIANGLES;
 }
 
 int Object::gensphere(char type, int theta_subdivisions, int phi_subdivisions){
