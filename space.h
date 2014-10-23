@@ -1,4 +1,5 @@
 #include <Angel.h>
+#include <vector>
 
 class celestial_body{
 
@@ -9,6 +10,9 @@ public:
 	void draw();
 
 private:
+
+	std::vector<vec3> points;
+	std::vector<vec3> colors;
 
 	mat4 transform;
 

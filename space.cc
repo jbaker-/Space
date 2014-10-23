@@ -7,11 +7,15 @@ solar_system::solar_system(){
 
     star = new celestial_body();
 
+    numpoints = star.numpoints;
+
 }
 
 solar_system::~solar_system(){
+
     delete planets;
     delete star;
+
 }
 
 void solar_system::draw_children(){
@@ -26,6 +30,10 @@ void solar_system::draw_children(){
 }
 
 celestial_body::celestial_body(float scale_factor){
+
+    
+
+    numpoints = points.size;
 
     scale = scale_factor;
 
