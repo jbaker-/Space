@@ -24,8 +24,8 @@ public:
 	int get_numpoints();
 
 
-	int begindex; //index of first point
-	int endex;	  //index of last point - both for making a draw call in the draw() functions
+	int begindex = 0; //index of first point
+	int endex = 0;	  //index of last point - both for making a draw call in the draw() functions
 
 	std::vector<vec3> *points;
 	std::vector<vec3> *colors;
@@ -54,7 +54,7 @@ public:
 	solar_system();
 
 	void draw_children();
-	void advance_one_tick(); //move planets - thisll be fun
+	void advance_one_tick(); //move planets - thisll be fun (oh god no)
 
     
 	celestial_body *star;
@@ -90,10 +90,10 @@ private:
 
 	float speed;	//determines how far the ship move per update
 
-	int numpoints;
+	// int numpoints;
 
-	int begindex; //first and last points for the ship's points
-	int endex;
+	// int begindex; //first and last points for the ship's points
+	// int endex;
 
 };
 
