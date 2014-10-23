@@ -32,7 +32,7 @@ EXECUTABLE_NAME = SpaceProject
 #.c:
 #	$(CC)  $@.c   $(InitShader) $(OPTIONS) $(LDLIBS) -o $@
 
-.cc:
+make:
 	$(CC)  $(NAME)  $(InitShader) $(OPTIONS) $(LDLIBS) -o $(EXECUTABLE_NAME)
 
 clean: 
