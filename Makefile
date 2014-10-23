@@ -3,11 +3,13 @@
 CC = /usr/bin/CC
 
 CC_OPTIONS = +w
-INCS = -I/usr/local/include/ -I/home/cs425/code-egs/  -I/home/cs425/code-egs/angel06/include/ -I/opt/csw/include/
+#INCS = -I/usr/local/include/ -I/home/cs425/code-egs/  -I/home/cs425/code-egs/angel06/include/ -I/opt/csw/include/
+INCS = -I./AngelCode/
 
 OPTIONS = $(CC_OPTIONS)  $(INCS) 
 
-LDLIBS = -L/opt/csw/lib -R/opt/csw/lib -lGLEW -lGL -lglut -lm -lGLU
+LDLIBS = -lGLEW -lGL -lglut -lm -lGLU 
+#-L/opt/csw/lib -R/opt/csw/lib 
 
 InitShader = /home/cs425/code-egs/angel06/Common/InitShader.o
 
