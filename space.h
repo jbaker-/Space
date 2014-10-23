@@ -51,7 +51,6 @@ class solar_system{
 public:
 
 	solar_system();
-	~solar_system();
 
 	void draw_children();
 	void advance_one_tick();
