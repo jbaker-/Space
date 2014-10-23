@@ -1,3 +1,5 @@
+#include <Angel.h>
+
 class celestial_body{
 
 public:

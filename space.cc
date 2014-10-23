@@ -1,5 +1,4 @@
 #include "space.h"
-#include <Angel.h>
 
 
 solar_system::solar_system(){
