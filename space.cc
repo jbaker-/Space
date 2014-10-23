@@ -2,6 +2,7 @@
 #define _SPACE_CC_
 
 #include "space.h"
+#include <cstdlib>
 
 //default shape for a celestial_body
 vec3 cube_coords[36] = {(-.5, .5, .5), ( .5, .5, .5), (-.5,-.5, .5), //first triangle
@@ -54,8 +55,19 @@ celestial_body::celestial_body(float scale_factor){
     endex = 0;
     numpoints = 36;
 
-    points = new std::vector<vec3> (&cube_coords[0], &cube_coords[0] + sizeof(cube_coords));
-    colors = new std::vector<vec3> (points->size());
+    points = new vec3[36]; //(&cube_coords[0], &cube_coords[0] + sizeof(cube_coords));
+    colors = new vec3[36]; // (points->size());
+
+    srand(scale_factor);
+
+    vec3 rand_color = vec3(rand(), rand(), rand());
+
+    for (int i = 0; i < 36; i++){
+
+        points[i] = cube_coords[i];
+        colors[i] = rand_color;
+
+    }
 
     numpoints = points->size();
 
