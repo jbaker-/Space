@@ -42,7 +42,7 @@ extern "C" void display(){
     //get this down to one call main.draw()
     //which calls draw() on each of its children
 
-}. 
+}
 
 extern "C" void timerFunc(int value){
     
