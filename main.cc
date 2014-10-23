@@ -40,7 +40,7 @@ extern "C" void display(){
     glClear(GL_COLOR_BUFFER_BIT);  
     //glDrawArrays(GL_TRIANGLES, 0, numpoints);
 
-    ss->draw_children();
+    ss.draw_children();
 
     glFlush();
 
