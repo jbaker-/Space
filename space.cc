@@ -25,6 +25,7 @@ solar_system::solar_system(){
     moon = new celestial_body(1);
 
 
+
     numpoints = star->get_numpoints();
     numpoints += moon->get_numpoints();
 
@@ -41,7 +42,7 @@ void solar_system::draw_children(){
     planets[2].draw(); //planet 3
     planets[3].draw(); //planet 4
 
-    star->draw();        //the star
+    star->draw();      //the star
 
     moon->draw();   //moon around planet 1
 

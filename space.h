@@ -23,10 +23,14 @@ public:
 
 	int get_numpoints();
 
-private:
+
+	int begindex; //index of first point
+	int endex;	  //index of last point - both for making a draw call in the draw() functions
 
 	std::vector<vec3> *points;
 	std::vector<vec3> *colors;
+
+private:
 
 	mat4 transform;
 
@@ -34,10 +38,7 @@ private:
 	vec3 translate; //used to construct the translate portion
 	vec3 rotate;    //used to construct the rotate portion
 
-	int begindex; //index of first point
-	int endex;	  //index of last point - both for making a draw call in the draw() functions
-
-	int numpoints;
+	int numpoints = 36;
 
 };
 
@@ -53,7 +54,7 @@ public:
 	solar_system();
 
 	void draw_children();
-	void advance_one_tick();
+	void advance_one_tick(); //move planets - thisll be fun
 
     
 	celestial_body *star;

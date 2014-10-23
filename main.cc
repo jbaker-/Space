@@ -3,11 +3,12 @@
 #include "AngelCode/Angel.h"
 using std::cout;
 
+int numpoints;
 
 vec3 *all_points; //pointer to array of all points in the scene
 vec3 *all_colors; //pointer to colors array
 
-solar_system ss; //the solar system
+solar_system ss; //the solar system, holds all the planets and other celestial bodies
 
 void myinit(){ //get points
 
@@ -16,6 +17,43 @@ void myinit(){ //get points
     //once all points are present, give each object a starting index and an ending index to use in the draw() function
     //also make sure each knows whether to use GL_TRIANGLES or GL_TRIANGLE_STRIP, etc 
     //e.g. draw() leads to a call of glDrawArrays(primitivetype, start, end)
+
+    numpoints = ss.numpoints;
+
+    all_points = new vec3[numpoints];
+    all_colors = new vec3[numpoints];
+
+    int index = 0;
+
+    ss.star.begindex = index;
+
+    for (int i = 0; i < 36; i++){
+        all_points[index] = ss.star.points[index];
+        index++;
+    }
+
+    ss.star.endex = index;
+
+    for (int j = 0; j < 4; j++){
+
+        ss.planets[j].begindex = index;
+
+        for (int k = 0; k < 36; k++){
+            all_points[index] = ss.planets[j].points[k];
+            index++;
+        }
+
+        ss.planets[j].endex = index - 1;
+    }
+
+    ss.moon.begindex = index;
+
+    for (int l = 0; l < 36; l++){
+        all_points[index] = ss.moon.points[l];
+        index++;
+    }
+
+    ss.moon.endex = numpoints - 1;
 
 }
 
@@ -33,6 +71,7 @@ void init(){ //set up buffers, shaders
     //glBufferData()
    
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(all_points), all_points);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(all_points), sizeof(all_points) + sizeof(all_colors), all_colors);
 }
 
 extern "C" void display(){
