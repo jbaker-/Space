@@ -24,11 +24,11 @@ public:
 	int get_numpoints();
 
 
-	int begindex; //index of first point
-	int endex;	  //index of last point - both for making a draw call in the draw() functions
-
 	std::vector<vec3> *points;
 	std::vector<vec3> *colors;
+
+	void set_begindex(int index){begindex = index;}
+	void set_endex(int index){endex = index;}
 
 private:
 
@@ -37,6 +37,9 @@ private:
 	float scale; 	//used to construct the scale portion of the transform
 	vec3 translate; //used to construct the translate portion
 	vec3 rotate;    //used to construct the rotate portion
+
+	int begindex; //index of first point
+	int endex;	  //index of last point - both for making a draw call in the draw() functions
 
 	int numpoints;
 

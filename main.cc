@@ -25,35 +25,35 @@ void myinit(){ //get points
 
     int index = 0;
 
-    ss.star.begindex = index;
+    ss.star.set_begindex(index);
 
     for (int i = 0; i < 36; i++){
         all_points[index] = ss.star.points[index];
         index++;
     }
 
-    ss.star.endex = index;
+    ss.star.set_endex(index);
 
     for (int j = 0; j < 4; j++){
 
-        ss.planets[j].begindex = index;
+        ss.planets[j].set_begindex(index);
 
         for (int k = 0; k < 36; k++){
             all_points[index] = ss.planets[j].points[k];
             index++;
         }
 
-        ss.planets[j].endex = index - 1;
+        ss.planets[j].set_endex(index - 1);
     }
 
-    ss.moon.begindex = index;
+    ss.moon.set_begindex(index);
 
     for (int l = 0; l < 36; l++){
         all_points[index] = ss.moon.points[l];
         index++;
     }
 
-    ss.moon.endex = numpoints - 1;
+    ss.moon.set_endex(numpoints - 1);
 
 }
 
