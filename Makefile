@@ -30,7 +30,7 @@ include /home/cs425/code-egs/Makefile.defs
 	$(CC)  $@.c   $(InitShader) $(OPTIONS) $(LDLIBS) -o $@
 
 .cc:
-	$(CC)  $@.cc  $(InitShader) $(OPTIONS) $(LDLIBS) -o $@
+	$(CC)  main.cc  $(InitShader) $(OPTIONS) $(LDLIBS) -o Space
 
 clean: 
 	rm -f lines0 lines simple simple1 simple2 triangle gasket point1 point2
