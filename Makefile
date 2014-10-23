@@ -25,7 +25,7 @@ CC = g++
 # Assumes the following file exists in the proper place.
 include ./Makefile.defs
 
-NAME = main.cc
+FILE_NAME = main.cc
 EXECUTABLE_NAME = SpaceProject
 
 # patterns to allow compilation of many c++ or c programs
@@ -33,7 +33,9 @@ EXECUTABLE_NAME = SpaceProject
 #	$(CC)  $@.c   $(InitShader) $(OPTIONS) $(LDLIBS) -o $@
 
 make:
-	$(CC)  $(NAME)  $(InitShader) $(OPTIONS) $(LDLIBS) -o $(EXECUTABLE_NAME)
+	$(CC)  -c -o space.o space.cc
+	$(CC)  -c -o main.o main.cc
+	$(CC)  $(OPTIONS) $(LDLIBS) -o $(EXECUTABLE_NAME) main.o space.o $(InitShader) 
 
 clean: 
 	rm -f triangle triangle1 polygon0 polygon1
