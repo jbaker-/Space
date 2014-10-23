@@ -1,6 +1,24 @@
 #include <Angel.h>
 #include <vector>
 
+vec3 cube_points[36] = {(-.5, .5, .5), ( .5, .5, .5), (-.5,-.5, .5), //first triangle
+					 	( .5, .5, .5), ( .5,-.5, .5), (-.5,-.5, .5),
+					 	( .5, .5, .5), ( .5, .5,-.5), ( .5,-.5, .5), 
+						( .5, .5,-.5), ( .5,-.5, .5), ( .5,-.5,-.5),
+						( .5, .5,-.5), ( .5,-.5,-.5), (-.5,-.5,-.5), // .
+						( .5, .5,-.5), (-.5, .5,-.5), (-.5,-.5,-.5), // .
+						(-.5, .5,-.5), (-.5, .5, .5), (-.5,-.5,-.5), // .
+						(-.5, .5, .5), (-.5,-.5,-.5), (-.5,-.5, .5),
+						( .5, .5, .5), (-.5, .5,-.5), (-.5, .5, .5),
+						( .5, .5, .5), ( .5, .5,-.5), (-.5, .5,-.5),
+						( .5,-.5, .5), ( .5,-.5,-.5), (-.5,-.5,-.5),
+					    ( .5,-.5, .5), (-.5,-.5,-.5), (-.5,-.5, .5)}; //last triangle
+
+//===============================================================================
+//The general class for a celestial body - includes sun, planets, moons
+//===============================================================================
+
+
 class celestial_body{
 
 public:
@@ -25,6 +43,10 @@ private:
 
 };
 
+//===============================================================================
+//Class for the solar system - has a pointer to the planets and a pointer to 
+//===============================================================================
+
 class solar_system{
 
 public:
@@ -34,12 +56,19 @@ public:
 
 	void draw_children();
 
-	celestial_body *planets;
+    
 	celestial_body *star;
+	celestial_body *planets;
+	celestial_body *moons;
 
 private:
-
+	int numpoints;
 };
+
+//===============================================================================
+//The ship class, which is the point from which the camera projects
+//===============================================================================
+
 
 class ship{
 
@@ -57,6 +86,8 @@ private:
 	vec3 position;  //gets updated every update
 
 	float speed;	//determines how far the ship move per update
+
+	int numpoints;
 
 	int begindex; //first and last points for the ship's points
 	int endex;

@@ -3,11 +3,17 @@
 
 solar_system::solar_system(){
 
-    planets = new celestial_body[6];
 
     star = new celestial_body();
+    planets = new celestial_body[4];
+    moons = new celestial_body()
+
 
     numpoints = star.numpoints;
+
+    for (int i = 0; i <= 3; i++){
+        numpoints += planets[i].numpoints;
+    }
 
 }
 
@@ -24,14 +30,17 @@ void solar_system::draw_children(){
     planets[1].draw(); //planet 2
     planets[2].draw(); //planet 3
     planets[3].draw(); //planet 4
-    planets[4].draw(); //moon 1 - around planet 1
-    planets[5].draw(); //asteroid
+
+    sun.draw();        //the sun
+
+    moons[0].draw();   //moon 1 around planet 1
+    moons[1].draw();   //moon 2 around planet 3
 
 }
 
 celestial_body::celestial_body(float scale_factor){
 
-    
+
 
     numpoints = points.size;
 
