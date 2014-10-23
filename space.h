@@ -24,8 +24,8 @@ public:
 	int get_numpoints();
 
 
-	std::vector<vec3> points;
-	std::vector<vec3> colors;
+	vec3 *points;
+	vec3 *colors;
 
 	void set_begindex(int index){begindex = index;}
 	void set_endex(int index){endex = index;}
