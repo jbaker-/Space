@@ -20,8 +20,6 @@
 
 # last-modified: Mon Sep 29 08:50:08 2008 (clarification of comments).
 
-CC = g++
-
 # Assumes the following file exists in the proper place.
 include ./Makefile.defs
 
@@ -33,8 +31,8 @@ EXECUTABLE_NAME = SpaceProject
 #	$(CC)  $@.c   $(InitShader) $(OPTIONS) $(LDLIBS) -o $@
 
 make:
-	$(CC)  -c -o space.o space.cc
-	$(CC)  -c -o main.o main.cc
+	$(CC)  -c -o space.o space.cc $(OPTIONS)
+	$(CC)  -c -o main.o main.cc $(OPTIONS)
 	$(CC)  $(OPTIONS) $(LDLIBS) -o $(EXECUTABLE_NAME) main.o space.o $(InitShader) 
 
 clean: 
