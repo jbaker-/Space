@@ -1,18 +1,35 @@
+#ifndef _SPACE_CC_
+#define _SPACE_CC_
+
 #include "space.h"
 
+//default shape for a celestial_body
+vec3 cube_coords[36] = {(-.5, .5, .5), ( .5, .5, .5), (-.5,-.5, .5), //first triangle
+                        ( .5, .5, .5), ( .5,-.5, .5), (-.5,-.5, .5),
+                        ( .5, .5, .5), ( .5, .5,-.5), ( .5,-.5, .5), 
+                        ( .5, .5,-.5), ( .5,-.5, .5), ( .5,-.5,-.5),
+                        ( .5, .5,-.5), ( .5,-.5,-.5), (-.5,-.5,-.5), // .
+                        ( .5, .5,-.5), (-.5, .5,-.5), (-.5,-.5,-.5), // .
+                        (-.5, .5,-.5), (-.5, .5, .5), (-.5,-.5,-.5), // .
+                        (-.5, .5, .5), (-.5,-.5,-.5), (-.5,-.5, .5),
+                        ( .5, .5, .5), (-.5, .5,-.5), (-.5, .5, .5),
+                        ( .5, .5, .5), ( .5, .5,-.5), (-.5, .5,-.5),
+                        ( .5,-.5, .5), ( .5,-.5,-.5), (-.5,-.5,-.5),
+                        ( .5,-.5, .5), (-.5,-.5,-.5), (-.5,-.5, .5)}; //last triangle
 
 solar_system::solar_system(){
 
 
-    star = new celestial_body();
+    star = new celestial_body(10);
     planets = new celestial_body[4];
-    moons = new celestial_body()
+    moon = new celestial_body(1);
 
 
-    numpoints = star.numpoints;
+    numpoints = star->get_numpoints();
+    numpoints += moon->get_numpoints();
 
-    for (int i = 0; i <= 3; i++){
-        numpoints += planets[i].numpoints;
+    for (int i = 0; i < 4; i++){
+        numpoints += planets[i].get_numpoints();
     }
 
 }
@@ -21,6 +38,7 @@ solar_system::~solar_system(){
 
     delete planets;
     delete star;
+    delete moon;
 
 }
 
@@ -31,26 +49,29 @@ void solar_system::draw_children(){
     planets[2].draw(); //planet 3
     planets[3].draw(); //planet 4
 
-    sun.draw();        //the sun
+    star->draw();        //the star
 
-    moons[0].draw();   //moon 1 around planet 1
-    moons[1].draw();   //moon 2 around planet 3
+    moon->draw();   //moon around planet 1
 
 }
 
 celestial_body::celestial_body(float scale_factor){
 
+    points = new std::vector<vec3> (&cube_coords[0], &cube_coords[0] + sizeof(cube_coords));
+    colors = new std::vector<vec3> (points->size());
 
-
-    numpoints = points.size;
+    numpoints = points->size();
 
     scale = scale_factor;
 
-    mat4 r = Rotate(rotate);
+    mat4 rx = RotateX(rotate.x);
+    mat4 ry = RotateY(rotate.y);
+    mat4 rz = RotateZ(rotate.z);
+
     mat4 t = Translate(translate);
     mat4 s = Scale(scale);
 
-    transform = t * r * s;
+    transform = t * rx * ry * rz * s;
 }
 
 void celestial_body::draw(){
@@ -59,6 +80,12 @@ void celestial_body::draw(){
 
 }
 
+int celestial_body::get_numpoints(){
+    return numpoints;
+}
+
 ship::ship(){
 
 }
+
+#endif

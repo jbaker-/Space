@@ -1,6 +1,6 @@
 #include <iostream>
 #include "space.h" //class definition for objects 
-#include <Angel.h>
+#include "AngelCode/Angel.h"
 using std::cout;
 
 
@@ -100,13 +100,13 @@ extern "C" void keyboard(unsigned char key, int x, int y){
 int main(int argc, char **argv){
 
 
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH);
+   //glutInit(&argc, argv);
+   // glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH);
 
-    glutInitWindowSize(640, 480);
-    glutCreateWindow("Space, the final frontier");
+    //glutInitWindowSize(640, 480);
+    //glutCreateWindow("Space, the final frontier");
 
-    glewInit();
+   // glewInit();
 
     myinit(); //get all the points generated
     init();   //get all the buffers allocated, and points and associated data loaded in

@@ -1,21 +1,15 @@
-#include <Angel.h>
+#ifndef _SPACE_H_
+#define _SPACE_H_
+
+#include "AngelCode/Angel.h"
 #include <vector>
 
-vec3 cube_points[36] = {(-.5, .5, .5), ( .5, .5, .5), (-.5,-.5, .5), //first triangle
-					 	( .5, .5, .5), ( .5,-.5, .5), (-.5,-.5, .5),
-					 	( .5, .5, .5), ( .5, .5,-.5), ( .5,-.5, .5), 
-						( .5, .5,-.5), ( .5,-.5, .5), ( .5,-.5,-.5),
-						( .5, .5,-.5), ( .5,-.5,-.5), (-.5,-.5,-.5), // .
-						( .5, .5,-.5), (-.5, .5,-.5), (-.5,-.5,-.5), // .
-						(-.5, .5,-.5), (-.5, .5, .5), (-.5,-.5,-.5), // .
-						(-.5, .5, .5), (-.5,-.5,-.5), (-.5,-.5, .5),
-						( .5, .5, .5), (-.5, .5,-.5), (-.5, .5, .5),
-						( .5, .5, .5), ( .5, .5,-.5), (-.5, .5,-.5),
-						( .5,-.5, .5), ( .5,-.5,-.5), (-.5,-.5,-.5),
-					    ( .5,-.5, .5), (-.5,-.5,-.5), (-.5,-.5, .5)}; //last triangle
 
 //===============================================================================
 //The general class for a celestial body - includes sun, planets, moons
+//
+//By default, the points array is populated by a list of points to make a cube,
+//which is just made of triangles - theres currently no way to change it
 //===============================================================================
 
 
@@ -23,14 +17,16 @@ class celestial_body{
 
 public:
 
-	celestial_body(float scale_factor);
+	celestial_body(float scale_factor = 1.0);
 
 	void draw();
 
+	int get_numpoints();
+
 private:
 
-	std::vector<vec3> points;
-	std::vector<vec3> colors;
+	std::vector<vec3> *points;
+	std::vector<vec3> *colors;
 
 	mat4 transform;
 
@@ -41,10 +37,13 @@ private:
 	int begindex; //index of first point
 	int endex;	  //index of last point - both for making a draw call in the draw() functions
 
+	int numpoints;
+
 };
 
 //===============================================================================
-//Class for the solar system - has a pointer to the planets and a pointer to 
+//Class for the solar system - has a pointer to the planets, a pointer to the 
+//star and a pointer to the moon that circles planet 1
 //===============================================================================
 
 class solar_system{
@@ -55,18 +54,22 @@ public:
 	~solar_system();
 
 	void draw_children();
+	void advance_one_tick();
 
     
 	celestial_body *star;
 	celestial_body *planets;
-	celestial_body *moons;
+	celestial_body *moon;
+
+	int numpoints;
 
 private:
-	int numpoints;
+
 };
 
 //===============================================================================
-//The ship class, which is the point from which the camera projects
+//The ship class, which is the point from which the camera projects - this needs
+//a considerable amount of work before any display stuff can occur
 //===============================================================================
 
 
@@ -94,3 +97,4 @@ private:
 
 };
 
+#endif
