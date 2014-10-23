@@ -1,4 +1,4 @@
-#include <iostream>: 
+#include <iostream>
 #include "objects.h" //class definition for objects 
 #include <Angel.h>
 using std::cout;
