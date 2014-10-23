@@ -32,18 +32,18 @@ void myinit(){ //get points
         index++;
     }
 
-    ss.star.set_endex(index);
+    ss.star->set_endex(index);
 
     for (int j = 0; j < 4; j++){
 
-        ss.planets[j]->set_begindex(index);
+        ss.planets[j].set_begindex(index);
 
         for (int k = 0; k < 36; k++){
-            all_points[index] = ss.planets[j]->get_point_at(k);
+            all_points[index] = ss.planets[j].get_point_at(k);
             index++;
         }
 
-        ss.planets[j]->set_endex(index - 1);
+        ss.planets[j].set_endex(index - 1);
     }
 
     ss.moon->set_begindex(index);
