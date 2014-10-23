@@ -24,8 +24,8 @@ public:
 	int get_numpoints();
 
 
-	int begindex = 0; //index of first point
-	int endex = 0;	  //index of last point - both for making a draw call in the draw() functions
+	int begindex; //index of first point
+	int endex;	  //index of last point - both for making a draw call in the draw() functions
 
 	std::vector<vec3> *points;
 	std::vector<vec3> *colors;

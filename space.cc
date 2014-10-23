@@ -50,6 +50,9 @@ void solar_system::draw_children(){
 
 celestial_body::celestial_body(float scale_factor){
 
+    begindex = 0;
+    endex = 0;
+
     points = new std::vector<vec3> (&cube_coords[0], &cube_coords[0] + sizeof(cube_coords));
     colors = new std::vector<vec3> (points->size());
 
