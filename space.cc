@@ -9,6 +9,11 @@ solar_system::solar_system(){
 
 }
 
+solar_system::~solar_system(){
+    delete planets;
+    delete star;
+}
+
 void solar_system::draw_children(){
 
     planets[0].draw(); //planet 1

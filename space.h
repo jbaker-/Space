@@ -15,7 +15,7 @@ private:
 	float scale; 	//used to construct the scale portion of the transform
 	vec3 translate; //used to construct the translate portion
 	vec3 rotate;    //used to construct the rotate portion
-	
+
 	int begindex; //index of first point
 	int endex;	  //index of last point - both for making a draw call in the draw() functions
 
@@ -26,6 +26,7 @@ class solar_system{
 public:
 
 	solar_system();
+	~solar_system();
 
 	void draw_children();
 

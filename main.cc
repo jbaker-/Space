@@ -7,7 +7,7 @@ using std::cout;
 vec3 *all_points; //pointer to array of all points in the scene
 vec3 *all_colors; //pointer to colors array
 
-solar_system *ss;
+solar_system *ss; //the solar system
 
 void myinit(){ //get points
 
@@ -42,7 +42,7 @@ extern "C" void display(){
     glClear(GL_COLOR_BUFFER_BIT);  
     //glDrawArrays(GL_TRIANGLES, 0, numpoints);
 
-    *ss.draw_children();
+    ss.draw_children();
 
     glFlush();
 
