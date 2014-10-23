@@ -30,6 +30,8 @@ public:
 	void set_begindex(int index){begindex = index;}
 	void set_endex(int index){endex = index;}
 
+	vec3 get_point_at(int index){return points[index];}
+
 private:
 
 	mat4 transform;

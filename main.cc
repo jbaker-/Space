@@ -28,7 +28,7 @@ void myinit(){ //get points
     ss.star->set_begindex(index);
 
     for (int i = 0; i < 36; i++){
-        all_points[index] = ss.(*star).points[index];
+        all_points[index] = ss.star->get_point_at(index);
         index++;
     }
 
@@ -39,7 +39,7 @@ void myinit(){ //get points
         ss.planets[j]->set_begindex(index);
 
         for (int k = 0; k < 36; k++){
-            all_points[index] = ss.(*planets[j]).points[k];
+            all_points[index] = ss.planets[j]->get_point_at(k);
             index++;
         }
 
@@ -49,7 +49,7 @@ void myinit(){ //get points
     ss.moon->set_begindex(index);
 
     for (int l = 0; l < 36; l++){
-        all_points[index] = ss.(*moon).points[l];
+        all_points[index] = ss.moon->get_point_at(l);
         index++;
     }
 
