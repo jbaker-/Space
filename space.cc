@@ -1,129 +1,31 @@
-#include <iostream>: 
-#include "objects.h" //class definition for objects 
+#include "space.h"
 #include <Angel.h>
-using std::cout;
 
 
-vec3 *all_points; //pointer to array of all points in the scene
-vec3 *all_colors; //pointer to colors array
+solar_system::solar_system(){
 
-Object main;
-
-
-void myinit(){ //get points
-
-    //output functions for the objects ---> points[]
-
-    main = new Object();
-
-
-    // object.gensphere(r, 10, 10);
-
-    // object.color_points(grey, true, 0.05);
-
-    //once all points are present, give each object a starting index and an ending index to use in the draw() function
-    //also make sure each knows whether to use GL_TRIANGLES or GL_TRIANGLE_STRIP, etc 
-    //e.g. draw() leads to a call of glDrawArrays(primitivetype, start, end)
-
+    planets = new celestial_body[5];
 
 }
 
-void init(){ //set up buffers, shaders
+void solar_system::draw_children(){
 
-    GLuint total_size = sizeof(all_points) + sizeof(all_colors);
-
-    GLuint vao; //vertex array object
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    GLuint buffer; //main buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    //glBufferData()
-   
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(all_points), all_points);
-}
-
-extern "C" void display(){
-
-    glClear(GL_COLOR_BUFFER_BIT);  
-    //glDrawArrays(GL_TRIANGLES, 0, numpoints);
-    glFlush();
-
-    //get this down to one call main.draw()
-    //which calls draw() on each of its children
+    planets[0].draw();
+    planets[1].draw();
+    planets[2].draw();
+    planets[3].draw();
+    planets[4].draw();
 
 }
 
-extern "C" void timerFunc(int value){
+celestial_body::celestial_body(){
+
+}
+
+void celestial_body::draw(){
+
+}
+
+ship::ship(){
     
 }
-
-extern "C" void keyboard(unsigned char key, int x, int y){
-
-    switch(key){
-
-        case 033:
-            exit(EXIT_SUCCESS); //escape key to exit
-            break;
-
-        case "W":
-        case "w": //up
-        break;
-
-        case "S":
-        case "s": //down
-        break;
-
-        case "A":
-        case "a": //left
-        break;
-
-        case "D":
-        case "d": //right
-        break;
-
-        // case "E":
-        // case "e": //roll clockwise
-        // break;
-
-        // case "Q":
-        // case "q": //roll counter-clockwise
-        // break;
-
-        case "+": //apply positive thrust
-        break;
-
-        case "-": //apply negative thrust
-        break;
-
-    }
-
-    glutPostRedisplay();
-
-}
-
-int main(void){
-
-
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH);
-
-    glutInitWindowSize(640, 480);
-    glutCreateWindow("Space, the final frontier");
-
-    glewInit();
-
-    myinit(); //get all the points generated
-    init();   //get all the buffers allocated, and points and associated data loaded in
-
-    glutDisplayFunc(display);
-    glutKeyboardFunc(keyboard);
-
-    glutMainLoop();
-
-    return(EXIT_SUCCESS);
-
-}
-
-
