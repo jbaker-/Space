@@ -37,6 +37,9 @@ extern "C" void display(){
 
     glClear(GL_COLOR_BUFFER_BIT);  
     //glDrawArrays(GL_TRIANGLES, 0, numpoints);
+
+    main.draw_children();
+
     glFlush();
 
     //get this down to one call main.draw()
