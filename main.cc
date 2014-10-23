@@ -17,7 +17,7 @@ void myinit(){ //get points
     //also make sure each knows whether to use GL_TRIANGLES or GL_TRIANGLE_STRIP, etc 
     //e.g. draw() leads to a call of glDrawArrays(primitivetype, start, end)
 
-    ss = new solar_system;
+    ss = new solar_system();
 
 }
 
