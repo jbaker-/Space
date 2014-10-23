@@ -1,36 +1,24 @@
-# This sample Makefile allows you to make an OpenGL application
-#   whose source is exactly one .c file or one .cc file under Solaris.
-#   check the location of the X libraries on your implementation.
-#
-# To use this Makefile, you type:
-#
-#        make xxxx
-#                  
-# where
-#       xxxx.cc is the name of the c++-file you wish to compile 
-#  or 
-#       xxxx.c is the name of the c-file you wish to compile 
-#       
-# A binary named xxxx will be produced
-# Libraries are assumed to be in the default search paths
-# as are any required include files
+#derived from the given makefile by Professor Chelberg
 
-#
-# Modified by Prof. Chelberg to also allow you to make from a single
-# c++ source file.  So if xxxx.cc is the sourcefile, you type make
-# xxxx to produce the binary file.
+CC = /usr/bin/CC
 
-# last-modified: Mon Sep 17 15:17:00 2012
+CC_OPTIONS = +w
+INCS = -I/usr/local/include/ -I/home/cs425/code-egs/  -I/home/cs425/code-egs/angel06/include/ -I/opt/csw/include/
 
-# Assumes the following file exists in the proper place.
-include /home/cs425/code-egs/Makefile.defs
+OPTIONS = $(CC_OPTIONS)  $(INCS) 
 
-# patterns to allow compilation of many c++ or c programs
-.c:
-	$(CC)  $@.c   $(InitShader) $(OPTIONS) $(LDLIBS) -o $@
+LDLIBS = -L/opt/csw/lib -R/opt/csw/lib -lGLEW -lGL -lglut -lm -lGLU
 
-.cc:
-	$(CC)  main.cc  $(InitShader) $(OPTIONS) $(LDLIBS) -o Space
+InitShader = /home/cs425/code-egs/angel06/Common/InitShader.o
+
+Space: main.o space.o
+	$(CC) main.o space.o $(InitShader) $(LDLIBS) -o Space
+
+main.o: main.cc
+	$(CC) -c main.cc
+
+space.o: space.h space.cc
+	$(CC) -c space.cc
 
 clean: 
-	rm -f lines0 lines simple simple1 simple2 triangle gasket point1 point2
+	rm *.o
