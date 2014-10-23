@@ -56,34 +56,34 @@ extern "C" void keyboard(unsigned char key, int x, int y){
             exit(EXIT_SUCCESS); //escape key to exit
             break;
 
-        case "W":
-        case "w": //up
+        case 'W':
+        case 'w': //up
         break;
 
-        case "S":
-        case "s": //down
+        case 'S':
+        case 's': //down
         break;
 
-        case "A":
-        case "a": //left
+        case 'A':
+        case 'a': //left
         break;
 
-        case "D":
-        case "d": //right
+        case 'D':
+        case 'd': //right
         break;
 
-        // case "E":
-        // case "e": //roll clockwise
+        // case 'E':
+        // case 'e': //roll clockwise
         // break;
 
-        // case "Q":
-        // case "q": //roll counter-clockwise
+        // case 'Q':
+        // case 'q': //roll counter-clockwise
         // break;
 
-        case "+": //apply positive thrust
+        case '+': //apply positive thrust
         break;
 
-        case "-": //apply negative thrust
+        case '-': //apply negative thrust
         break;
 
     }
