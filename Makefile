@@ -1,21 +1,36 @@
-#derived from the given makefile by Professor Chelberg
+# This sample Makefile allows you to make an OpenGL application
+#   whose source is exactly one .c file under linux.
+#   check the location of the X libraries on your implementation.
+#
+# To use this Makefile, you type:
+#
+#        make xxxx
+#                  
+# where
+#       xxxx.c is the name of the file you wish to compile 
+#       
+# A binary named xxxx will be produced
+# Libraries are assumed to be in the default search paths
+# as are any required include files
 
-CC = /usr/bin/g++
+#
+# Modified by Prof. Chelberg to also allow you to make from a single
+# c++ source file.  So if xxxx.cc is the sourcefile, you type make
+# xxxx to produce the binary file.
 
-CC_OPTIONS = +w
-#INCS = -I/usr/local/include/ -I/home/cs425/code-egs/  -I/home/cs425/code-egs/angel06/include/ -I/opt/csw/include/
-INCS = -I./AngelCode/
+# last-modified: Mon Sep 29 08:50:08 2008 (clarification of comments).
 
-OPTIONS = $(CC_OPTIONS)  $(INCS) 
+CC = g++
 
-LDLIBS = -lGLEW -lGL -lglut -lm -lGLU -g
-#-L/opt/csw/lib -R/opt/csw/lib 
+# Assumes the following file exists in the proper place.
+include /home/cs425/code-egs/Makefile.defs
 
+# patterns to allow compilation of many c++ or c programs
+.c:
+	$(CC)  $@.c   $(InitShader) $(OPTIONS) $(LDLIBS) -o $@
 
-Space: 
-	$(CC) -c main.cc
-	$(CC) -c space.cc
-	$(CC) main.o space.o $(LDLIBS) -o SpaceProject
+.cc:
+	$(CC)  $@.cc  $(InitShader) $(OPTIONS) $(LDLIBS) -o $@
 
 clean: 
-	rm *.o
+	rm -f triangle triangle1 polygon0 polygon1
