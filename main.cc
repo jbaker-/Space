@@ -42,7 +42,7 @@ extern "C" void display(){
     //get this down to one call main.draw()
     //which calls draw() on each of its children
 
-}
+}. 
 
 extern "C" void timerFunc(int value){
     
@@ -92,7 +92,7 @@ extern "C" void keyboard(unsigned char key, int x, int y){
 
 }
 
-int main(void){
+int main(int argc, char **argv){
 
 
     glutInit(&argc, argv);
