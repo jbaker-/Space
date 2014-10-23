@@ -69,7 +69,7 @@ celestial_body::celestial_body(float scale_factor){
 
     }
 
-    numpoints = points->size();
+    numpoints = 36;
 
     scale = scale_factor;
 
