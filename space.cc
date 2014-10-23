@@ -73,7 +73,7 @@ celestial_body::celestial_body(float scale_factor){
 
 vec3 celestial_body::get_point_at(int index){
 
-    return vec3(points[index]);
+    return vec3(points[index].x, points[index].y, points[index].z);
 
 }
 
