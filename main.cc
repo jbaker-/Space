@@ -7,7 +7,7 @@ using std::cout;
 vec3 *all_points; //pointer to array of all points in the scene
 vec3 *all_colors; //pointer to colors array
 
-solar_system *ss; //the solar system
+solar_system ss; //the solar system
 
 void myinit(){ //get points
 
@@ -16,8 +16,6 @@ void myinit(){ //get points
     //once all points are present, give each object a starting index and an ending index to use in the draw() function
     //also make sure each knows whether to use GL_TRIANGLES or GL_TRIANGLE_STRIP, etc 
     //e.g. draw() leads to a call of glDrawArrays(primitivetype, start, end)
-
-    ss = new solar_system();
 
 }
 
