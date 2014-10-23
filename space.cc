@@ -71,6 +71,12 @@ celestial_body::celestial_body(float scale_factor){
     transform = t * rx * ry * rz * s;
 }
 
+vec3 celestial_body::get_point_at(int index){
+
+    return vec3(points[index]);
+
+}
+
 void celestial_body::draw(){
 
     glDrawArrays(GL_TRIANGLES, begindex, endex);
