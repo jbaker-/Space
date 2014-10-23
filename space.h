@@ -38,7 +38,7 @@ private:
 	vec3 translate; //used to construct the translate portion
 	vec3 rotate;    //used to construct the rotate portion
 
-	int numpoints = 36;
+	int numpoints;
 
 };
 
