@@ -105,7 +105,7 @@ extern "C" void display(){
 
     glClear(GL_COLOR_BUFFER_BIT);  
 
-    glUniformMatrix4fv(camloc, 1, GL_FALSE, LookAt(s.get_position(), s.get_direction(), s.get_up()));
+    glUniformMatrix4fv(camloc, 1, GL_FALSE, LookAt(ship_1.get_position(), ship_1.get_direction(), ship_1.get_up()));
 
     ss.draw_children();
 
