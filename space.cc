@@ -95,7 +95,7 @@ celestial_body::celestial_body(float scale_factor){
     points = new vec4[36];
     colors = new vec4[36]; 
 
-    vec3 rand_color = vec4(rand(), rand(), rand(), 1.0f);
+    vec4 rand_color = vec4(rand(), rand(), rand(), 1.0f);
 
     for (int i = 0; i < 36; i++){
 
