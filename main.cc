@@ -9,7 +9,7 @@ vec3 *all_points; //pointer to array of all points in the scene
 vec3 *all_colors; //pointer to colors array
 
 solar_system ss; //the solar system, holds all the planets and other celestial bodies
-ship s;          //the location of the camera
+ship ship_1;          //the location of the camera
 
 GLint transformloc; //sent per object, per draw call
 GLint camloc;
@@ -112,11 +112,11 @@ extern "C" void display(){
     glFlush();
 
 }
-LookAt
+
 extern "C" void timerFunc(int value){
 
     ss.advance_one_tick(); //move planets forward in time
-    s.advance_one_tick();  //move ship forward (backward if s.speed < 0) on its course
+    ship_1.advance_one_tick();  //move ship forward (backward if s.speed < 0) on its course
 
     glutTimerFunc(12, timerFunc, 0);
 }
@@ -132,25 +132,25 @@ extern "C" void keyboard(unsigned char key, int x, int y){
             break;
 
         case 'W':
-        case 'w': s.ascend(.1);//up
+        case 'w': ship_1.ascend(.1);//up
         break;
 
         case 'S':
-        case 's': s.ascend(-.1); //down
+        case 's': ship_1.ascend(-.1); //down
         break;
 
         case 'A':
-        case 'a': s.turn(-.1); //left
+        case 'a': ship_1.turn(-.1); //left
         break;
 
         case 'D':
-        case 'd': s.turn(.1); //right
+        case 'd': ship_1.turn(.1); //right
         break;
 
-        case '+': s.speed_up(); //apply positive thrust
+        case '+': ship_1.speed_up(); //apply positive thrust
         break;
 
-        case '-': s.slow_down();//apply negative thrust
+        case '-': ship_1.slow_down();//apply negative thrust
         break;
 
     }

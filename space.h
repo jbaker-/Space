@@ -108,9 +108,9 @@ public:
 
 	//void draw();
 
-	vec3 getposition(){return vec3(position.x, position.y, position.z);}
-	vec3 getdirection(){return vec3(direction.x, direction.y, direction.z);}
-	vec3 getup(){return vec3(up.x, up.y, up.z);}
+	vec3 get_position(){return vec3(position.x, position.y, position.z);}
+	vec3 get_direction(){return vec3(direction.x, direction.y, direction.z);}
+	vec3 get_up(){return vec3(up.x, up.y, up.z);}
 
 	void advance_one_tick();
 
