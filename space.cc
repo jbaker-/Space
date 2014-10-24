@@ -38,14 +38,14 @@ solar_system::solar_system(){
 
 void solar_system::draw_children(){
 
-    planets[0].draw(); //planet 1
-    planets[1].draw(); //planet 2
-    planets[2].draw(); //planet 3
-    planets[3].draw(); //planet 4
+    planets[0].draw(transformlocation); //planet 1
+    planets[1].draw(transformlocation); //planet 2
+    planets[2].draw(transformlocation); //planet 3
+    planets[3].draw(transformlocation); //planet 4
 
-    star->draw();      //the star
+    star->draw(transformlocation);      //the star
 
-    moon->draw();   //moon around planet 1
+    moon->draw(transformlocation);   //moon around planet 1
 
 }
 
@@ -53,27 +53,27 @@ void solar_system::advance_one_tick(){ //animates the movement of the planets - 
     
     planets[0].increment_theta();
     planets[0].set_translate(vec3(3 * cos(planets[0].get_orbit_theta()), 0, 3 * sin(planets[0].get_orbit_theta()))); //kind of uses arbitrary radii
-    planets[].set_rotate(vec3(0, planets[0].get_rot_theta, 0));
+    planets[].set_rotate(vec3(0.0, planets[0].get_rot_theta, 0.0));
 
     planets[1].increment_theta();
     planets[1].set_translate(vec3(5 * cos(planets[1].get_orbit_theta()), 0, 6 * sin(planets[1].get_orbit_theta())));
-    planets[].set_rotate(vec3(0, planets[1].get_rot_theta, 0));
+    planets[].set_rotate(vec3(0.0, planets[1].get_rot_theta, 0.0));
 
     planets[2].increment_theta();
-    planets[2].set_translate(vec3(9 * cos(planets[2].get_orbit_theta()), 0, 8 * sin(planets[2].get_orbit_theta())));
-    planets[].set_rotate(vec3(0, planets[2].get_rot_theta, 0));
+    planets[2].set_translate(vec3(9 * cos(planets[2].get_orbit_theta()), 0.0, 8 * sin(planets[2].get_orbit_theta())));
+    planets[].set_rotate(vec3(0.0, planets[2].get_rot_theta, 0.0));
 
     planets[3].increment_theta();
-    planets[3].set_translate(vec3(12 * cos(planets[3].get_orbit_theta()), 0, 13 * sin(planets[3].get_orbit_theta())));
-    planets[].set_rotate(vec3(0, planets[3].get_rot_theta, 0));
+    planets[3].set_translate(vec3(12 * cos(planets[3].get_orbit_theta()), 0.0, 13 * sin(planets[3].get_orbit_theta())));
+    planets[].set_rotate(vec3(0.0, planets[3].get_rot_theta, 0.0));
     
     star->increment_theta();
-    star->set_translate(vec3(cos(star->get_orbit_theta()), 0, sin(star->get_orbit_theta()))); 
-    star->set_rotate(vec3(0, star->get_rot_theta(), 0));
+    star->set_translate(vec3(0.0, 0.0, 0.0)); 
+    star->set_rotate(vec3(0.0, star->get_rot_theta(), 0.0));
     
     moon->increment_theta();
     moon->set_translate(vec3(planets[1].get_translate().x + .5 * cos(moon->get_orbit_theta()), 0, planets[1].get_translate.z + .4 * sin(moon->get_orbit_theta())));
-    moon->set_rotate(vec3(0, moon->get_rot_theta(), 0));
+    moon->set_rotate(vec3(0.0, moon->get_rot_theta(), 0.0));
 
 }
 
@@ -118,7 +118,7 @@ celestial_body::celestial_body(float scale_factor){
     transform = t * rx * ry * rz * s;
 }
 
-void celestial_body::increment_orbit_theta(){
+void celestial_body::increment_theta(){
 
     orbit_theta += orbit_theta_increment; 
     rot_theta += rot_theta_increment;

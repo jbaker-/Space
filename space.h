@@ -117,8 +117,8 @@ public:
 	void speed_up(){speed += .1;} 
 	void slow_down(){speed -= .1;} //can go negative - to move backwards
 
-	void turn(float amount){direction *= RotateY(amount);}
-	void ascend(float amount){position *= Translate(0, amount, 0);}
+	void turn(float amount){vec4(direction.x, direction.y, direction.z, 1.0) *= RotateY(amount);}
+	void ascend(float amount){vec4(position.x, position.y, position.z, 1.0) *= Translate(0, amount, 0);}
 
 private:
 
