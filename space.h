@@ -124,9 +124,9 @@ private:
 
 	//mat4 transform;	//built from position & direction
 
-	vec3 direction; //should keep this normalized
-	vec3 position;  //gets updated every update
-	vec3 up;
+	vec4 direction; //should keep this normalized
+	vec4 position;  //gets updated every update
+	vec4 up;
 
 	float speed;	//determines how far the ship move per update
 

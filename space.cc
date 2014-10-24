@@ -53,26 +53,26 @@ void solar_system::advance_one_tick(){ //animates the movement of the planets - 
     
     planets[0].increment_theta();
     planets[0].set_translate(vec3(3 * cos(planets[0].get_orbit_theta()), 0, 3 * sin(planets[0].get_orbit_theta()))); //kind of uses arbitrary radii
-    planets[0].set_rotate(vec3(0.0f, planets[0].get_rot_theta, 0.0f));
+    planets[0].set_rotate(vec3(0.0f, planets[0].get_rot_theta(), 0.0f));
 
     planets[1].increment_theta();
     planets[1].set_translate(vec3(5 * cos(planets[1].get_orbit_theta()), 0, 6 * sin(planets[1].get_orbit_theta())));
-    planets[1].set_rotate(vec3(0.0f, planets[1].get_rot_theta, 0.0f));
+    planets[1].set_rotate(vec3(0.0f, planets[1].get_rot_theta(), 0.0f));
 
     planets[2].increment_theta();
     planets[2].set_translate(vec3(9 * cos(planets[2].get_orbit_theta()), 0.0, 8 * sin(planets[2].get_orbit_theta())));
-    planets[2].set_rotate(vec3(0.0f, planets[2].get_rot_theta, 0.0f));
+    planets[2].set_rotate(vec3(0.0f, planets[2].get_rot_theta(), 0.0f));
 
     planets[3].increment_theta();
     planets[3].set_translate(vec3(12 * cos(planets[3].get_orbit_theta()), 0.0, 13 * sin(planets[3].get_orbit_theta())));
-    planets[3].set_rotate(vec3(0.0f, planets[3].get_rot_theta, 0.0f));
+    planets[3].set_rotate(vec3(0.0f, planets[3].get_rot_theta(), 0.0f));
     
     star->increment_theta();
     star->set_translate(vec3(0.0, 0.0, 0.0)); 
     star->set_rotate(vec3(0.0f, star->get_rot_theta(), 0.0f));
     
     moon->increment_theta();
-    moon->set_translate(vec3(planets[1].get_translate().x + .5 * cos(moon->get_orbit_theta()), 0, planets[1].get_translate.z + .4 * sin(moon->get_orbit_theta())));
+    moon->set_translate(vec3(planets[1].get_translate().x + .5 * cos(moon->get_orbit_theta()), 0, planets[1].get_translate().z + .4 * sin(moon->get_orbit_theta())));
     moon->set_rotate(vec3(0.0f, moon->get_rot_theta(), 0.0f));
 
 }
@@ -167,9 +167,9 @@ int celestial_body::get_numpoints(){
 
 ship::ship(){
 
-    position = vec3(15, 15, 15);
-    direction = vec3(0, 0, 0);
-    up = vec3(0, 1, 0);
+    position = vec4(15, 15, 15, 0);
+    direction = vec4(0, 0, 0, 0);
+    up = vec4(0, 1, 0, 0);
 
     speed = 0.1;
 
@@ -178,6 +178,17 @@ ship::ship(){
 void ship::advance_one_tick(){
 
     position += normalize(direction) * speed;
+
+}
+
+void ship::turn(float amount){
+
+    direction = RotateY(amount) * vec4(direction.x, direction.y, direction.z, 1.0);
+
+}
+void ship::ascend(float amount){
+
+    position = Translate(0, amount, 0) * vec4(position.x, position.y, position.z, 1.0);
 
 }
 
