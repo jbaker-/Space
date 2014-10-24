@@ -171,7 +171,7 @@ ship::ship(){
     direction = vec4(0.1, 0.1, 0.1, 0); //this may fix my current issue
     up = vec4(0, 1, 0, 0);
 
-    speed = 0.0f;
+    speed = 0.1f;
 
 }
 
