@@ -5,8 +5,8 @@ using std::cout;
 
 int numpoints;
 
-vec3 *all_points; //pointer to array of all points in the scene
-vec3 *all_colors; //pointer to colors array
+vec4 *all_points; //pointer to array of all points in the scene
+vec4 *all_colors; //pointer to colors array
 
 solar_system ss; //the solar system, holds all the planets and other celestial bodies
 ship ship_1;          //the location of the camera
@@ -24,8 +24,8 @@ void myinit(){ //get points
 
     numpoints = ss.numpoints;
 
-    all_points = new vec3[numpoints];
-    all_colors = new vec3[numpoints];
+    all_points = new vec4[numpoints];
+    all_colors = new vec4[numpoints];
 
     int index = 0;
 
@@ -86,11 +86,11 @@ void init(){ //set up buffers, shaders
 
     GLuint vPosition = glGetAttribLocation(program, "vPosition"); //vPosition
     glEnableVertexAttribArray(vPosition);
-    glVertexAttribPointer(vPosition, 0, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+    glVertexAttribPointer(vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 
     GLuint vColor = glGetAttribLocation(program, "vColor");       //vColor
     glEnableVertexAttribArray(vColor);
-    glVertexAttribPointer(vColor, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(all_points)));
+    glVertexAttribPointer(vColor, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(all_points)));
 
     transformloc = glGetUniformLocation(program, "transform");
     camloc = glGetUniformLocation(program, "camera");

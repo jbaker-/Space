@@ -24,14 +24,14 @@ public:
 	int get_numpoints();
 
 
-	vec3 *points;	//holds the points and colors of the planet/moon/star/whatever
-	vec3 *colors;
+	vec4 *points;	//holds the points and colors of the planet/moon/star/whatever
+	vec4 *colors;
 
 	void set_begindex(int index){begindex = index;} //used when putting the points into the main array
 	void set_endex(int index){endex = index;}
 
-	vec3 get_point_at(int index);	//accessor functions, because there was an issue with 
-	vec3 get_color_at(int index);	//casting when I tried to access directly for some reason
+	vec4 get_point_at(int index);	//accessor functions, because there was an issue with 
+	vec4 get_color_at(int index);	//casting when I tried to access directly for some reason
 									//it kept trying to assign a vector<vec3> to a vec3, even though I was dereferencing it
 
 	float get_orbit_theta(){return orbit_theta;}		//for animation of the planets around the star
