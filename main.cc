@@ -139,7 +139,7 @@ extern "C" void keyboard(unsigned char key, int x, int y){
 
         case 'S':
         case 's': ship_1.ascend(-.1); //down
-                  std::cout<< "distance from 0,0,0 = " << length(vec3(ship_1.get_position().x, ship_1.get_position().y, ship_1.get_position().z));
+                  std::cout<< "distance from 0,0,0 = " << length(ship_1.get_position()) << endl;
         break;
 
         case 'A':
