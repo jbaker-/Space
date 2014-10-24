@@ -92,10 +92,10 @@ celestial_body::celestial_body(float scale_factor){
 
     numpoints = 36;
 
-    points = new vec3[36];
-    colors = new vec3[36]; 
+    points = new vec4[36];
+    colors = new vec4[36]; 
 
-    vec3 rand_color = vec3(rand(), rand(), rand());
+    vec3 rand_color = vec4(rand(), rand(), rand(), 1.0f);
 
     for (int i = 0; i < 36; i++){
 
@@ -125,9 +125,9 @@ void celestial_body::increment_theta(){
 
 }
 
-vec3 celestial_body::get_point_at(int index){
+vec4 celestial_body::get_point_at(int index){
 
-    vec3 vec;
+    vec4 vec;
 
     vec = points[index];
 
@@ -135,9 +135,9 @@ vec3 celestial_body::get_point_at(int index){
 
 }
 
-vec3 celestial_body::get_color_at(int index){
+vec4 celestial_body::get_color_at(int index){
 
-    vec3 vec;
+    vec4 vec;
 
     vec = colors[index];
 
