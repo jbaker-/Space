@@ -95,8 +95,7 @@ private:
 };
 
 //===============================================================================
-//The ship class, which is the point from which the camera projects - this needs
-//a considerable amount of work before any display stuff can occur
+//The ship class, which is the point from which the camera projects 
 //===============================================================================
 
 
@@ -113,6 +112,9 @@ public:
 	vec4 get_up(){return up;}
 	float get_speed(){return speed;}
 
+	void set_position(vec3 pos){position = pos;}
+	void set_direction(vec3 dir){direction = dir;}
+
 	void advance_one_tick();
 
 	void speed_up(){speed += .1;} 
@@ -125,7 +127,7 @@ private:
 
 	//mat4 transform;	//built from position & direction
 
-	vec4 direction; //should keep this normalized
+	vec4 direction; 
 	vec4 position;  //gets updated every update
 	vec4 up;
 

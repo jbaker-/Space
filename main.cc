@@ -141,6 +141,7 @@ extern "C" void keyboard(unsigned char key, int x, int y){
         case 's': ship_1.ascend(-.1); //down
                   std::cout<< "distance from 0,0,0 = " << length(ship_1.get_position()) << std::endl
                            << "current position = " << ship_1.get_position() << std::endl
+                           << "current direction = " << ship_1.get_direction() << std::endl
                            << "speed = " << ship_1.get_speed() << std::endl;
         break;
 
@@ -150,6 +151,11 @@ extern "C" void keyboard(unsigned char key, int x, int y){
 
         case 'D':
         case 'd': ship_1.turn(.1); //right
+        break;
+
+        case 'M':
+        case 'm': ship_1.set_position(vec3( .5, .5, .5));
+                  ship_1.set_direction(normalize(vec3(-1, -1, -1)));
         break;
 
         case '+': ship_1.speed_up(); //apply positive thrust
