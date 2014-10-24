@@ -78,7 +78,7 @@ public:
 
 	solar_system();
 
-	void draw_children(GLint location); //sends the location to send the matrix to
+	void draw_children(); //sends the location to send the matrix to
 	void advance_one_tick(); //move planets - aka update_children
 	void set_transform_pointer_loc(GLint set){transformlocation = set;}
 
