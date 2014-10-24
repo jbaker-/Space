@@ -1,3 +1,5 @@
+#Adapted from original - credit to Professor Chelberg
+
 # This sample Makefile allows you to make an OpenGL application
 #   whose source is exactly one .c file under linux.
 #   check the location of the X libraries on your implementation.
