@@ -118,7 +118,9 @@ extern "C" void timerFunc(int value){
     ss.advance_one_tick(); //move planets forward in time
     ship_1.advance_one_tick();  //move ship forward (backward if s.speed < 0) on its course
 
-    glutTimerFunc(12, timerFunc, 0);
+    GLuint time_per_frame = 12;
+
+    glutTimerFunc(time_per_frame, timerFunc, 0);
 }
 
 extern "C" void keyboard(unsigned char key, int x, int y){
