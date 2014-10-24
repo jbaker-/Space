@@ -49,16 +49,51 @@ void solar_system::draw_children(){
 
 }
 
+void solar_system::advance_one_tick(){ //animates the movement of the planets - used in the timer function
+    
+    planets[0].increment_theta();
+    planets[0].set_translate(vec3(3 * cos(planets[0].get_orbit_theta()), 0, 3 * sin(planets[0].get_orbit_theta()))); //kind of uses arbitrary radii
+    planets[].set_rotate(vec3(0, planets[0].get_rot_theta, 0));
+
+    planets[1].increment_theta();
+    planets[1].set_translate(vec3(5 * cos(planets[1].get_orbit_theta()), 0, 6 * sin(planets[1].get_orbit_theta())));
+    planets[].set_rotate(vec3(0, planets[1].get_rot_theta, 0));
+
+    planets[2].increment_theta();
+    planets[2].set_translate(vec3(9 * cos(planets[2].get_orbit_theta()), 0, 8 * sin(planets[2].get_orbit_theta())));
+    planets[].set_rotate(vec3(0, planets[2].get_rot_theta, 0));
+
+    planets[3].increment_theta();
+    planets[3].set_translate(vec3(12 * cos(planets[3].get_orbit_theta()), 0, 13 * sin(planets[3].get_orbit_theta())));
+    planets[].set_rotate(vec3(0, planets[3].get_rot_theta, 0));
+    
+    star->increment_theta();
+    star->set_translate(vec3(cos(star->get_orbit_theta()), 0, sin(star->get_orbit_theta()))); 
+    star->set_rotate(vec3(0, star->get_rot_theta(), 0));
+    
+    moon->increment_theta();
+    moon->set_translate(vec3(planets[1].get_translate().x + .5 * cos(moon->get_orbit_theta()), 0, planets[1].get_translate.z + .4 * sin(moon->get_orbit_theta())));
+    moon->set_rotate(vec3(0, moon->get_rot_theta(), 0));
+
+}
+
 celestial_body::celestial_body(float scale_factor){
+
+    srand(scale_factor);
 
     begindex = 0;
     endex = 0;
+
+    orbit_theta = 0.0;
+    orbit_theta_increment = .05 * (rand() % 40);
+
+    rot_theta = 0.0;
+    rot_theta_increment = .01 * (rand() % 200);
+
     numpoints = 36;
 
-    points = new vec3[36]; //(&cube_coords[0], &cube_coords[0] + sizeof(cube_coords));
-    colors = new vec3[36]; // (points->size());
-
-    srand(scale_factor);
+    points = new vec3[36];
+    colors = new vec3[36]; 
 
     vec3 rand_color = vec3(rand(), rand(), rand());
 
@@ -83,6 +118,13 @@ celestial_body::celestial_body(float scale_factor){
     transform = t * rx * ry * rz * s;
 }
 
+void celestial_body::increment_orbit_theta(){
+
+    orbit_theta += orbit_theta_increment; 
+    rot_theta += rot_theta_increment;
+
+}
+
 vec3 celestial_body::get_point_at(int index){
 
     vec3 vec;
@@ -93,9 +135,29 @@ vec3 celestial_body::get_point_at(int index){
 
 }
 
-void celestial_body::draw(){
+vec3 celestial_body::get_color_at(int index){
 
-    glDrawArrays(GL_TRIANGLES, begindex, endex);
+    vec3 vec;
+
+    vec = colors[index];
+
+    return vec;
+
+}
+
+void celestial_body::draw(GLint loc){
+
+    //calculate transform and send it as uniform mat4, then draw
+
+    mat4 scale_mat = Scale(scale, scale, scale); //set size
+    mat4 orient = RotateY(rotate.y);             //set orientation
+    mat4 locate = Translate(translate);          //set position
+
+    transform = locate * orient * scale_mat;     //gather into one mat4
+
+    glUniformMatrix4fv(loc, 1, GL_FALSE, transform); //send to GPU
+
+    glDrawArrays(GL_TRIANGLES, begindex, endex);     //draw
 
 }
 
@@ -104,6 +166,18 @@ int celestial_body::get_numpoints(){
 }
 
 ship::ship(){
+
+    position = vec3(15, 15, 15);
+    direction = vec3(0, 0, 0);
+    up = vec3(0, 1, 0);
+
+    speed = 0.1;
+
+}
+
+void ship::advance_one_tick(){
+
+    position += normalize(direction) * speed;
 
 }
 

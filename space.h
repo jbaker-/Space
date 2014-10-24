@@ -17,20 +17,32 @@ class celestial_body{
 
 public:
 
-	celestial_body(float scale_factor = 1.0);
+	celestial_body(float scale_factor = 0.1);
 
-	void draw();
+	void draw(GLint loc);
 
 	int get_numpoints();
 
 
-	vec3 *points;
+	vec3 *points;	//holds the points and colors of the planet/moon/star/whatever
 	vec3 *colors;
 
-	void set_begindex(int index){begindex = index;}
+	void set_begindex(int index){begindex = index;} //used when putting the points into the main array
 	void set_endex(int index){endex = index;}
 
-	vec3 get_point_at(int index);
+	vec3 get_point_at(int index);	//accessor functions, because there was an issue with 
+	vec3 get_color_at(int index);	//casting when I tried to access directly for some reason
+									//it kept trying to assign a vector<vec3> to a vec3, even though I was dereferencing it
+
+	float get_orbit_theta(){return orbit_theta;}		//for animation of the planets around the star
+	float get_rot_theta(){return rot_theta;}
+
+	void increment_theta();	//called every update
+
+	void set_translate(vec3 set){translate = set;}
+	vec3 get_translate(){return translate;}
+
+	void set_rotate(vec3 set){rotate = set;}
 
 private:
 
@@ -45,6 +57,14 @@ private:
 
 	int numpoints;
 
+	float orbit_theta;
+	float orbit_theta_increment; //for revolutions about the star
+
+	float rot_theta;
+	float rot_theta_increment;	//for rotations about its axis
+
+
+
 };
 
 //===============================================================================
@@ -58,8 +78,9 @@ public:
 
 	solar_system();
 
-	void draw_children();
-	void advance_one_tick(); //move planets - thisll be fun (oh god no)
+	void draw_children(GLint location); //sends the location to send the matrix to
+	void advance_one_tick(); //move planets - aka update_children
+	void set_transform_pointer_loc(GLint set){transformlocation = set;}
 
     
 	celestial_body *star;
@@ -67,6 +88,7 @@ public:
 	celestial_body *moon;
 
 	int numpoints;
+	GLint transformlocation;
 
 private:
 
@@ -86,12 +108,25 @@ public:
 
 	//void draw();
 
+	vec3 getposition(){return position;}
+	vec3 getdirection(){return direction;}
+	vec3 getup(){return up;}
+
+	void advance_one_tick();
+
+	void speed_up(){speed += .1;} 
+	void slow_down(){speed -= .1;} //can go negative - to move backwards
+
+	void turn(float amount){direction *= RotateY(amount);}
+	void ascend(float amount){position *= Translate(0, amount, 0);}
+
 private:
 
-	mat4 transform;	//built from position & direction
+	//mat4 transform;	//built from position & direction
 
 	vec3 direction; //should keep this normalized
 	vec3 position;  //gets updated every update
+	vec3 up;
 
 	float speed;	//determines how far the ship move per update
 
