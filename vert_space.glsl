@@ -1,5 +1,5 @@
-attribute vec3 vPosition;
-attribute vec3 vColor;
+attribute vec4 vPosition;
+attribute vec4 vColor;
 
 uniform mat4 transform;
 uniform mat4 camera;
