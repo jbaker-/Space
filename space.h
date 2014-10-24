@@ -108,17 +108,17 @@ public:
 
 	//void draw();
 
-	vec3 getposition(){return position;}
-	vec3 getdirection(){return direction;}
-	vec3 getup(){return up;}
+	vec3 getposition(){return vec3(position.x, position.y, position.z);}
+	vec3 getdirection(){return vec3(direction.x, direction.y, direction.z);}
+	vec3 getup(){return vec3(up.x, up.y, up.z);}
 
 	void advance_one_tick();
 
 	void speed_up(){speed += .1;} 
 	void slow_down(){speed -= .1;} //can go negative - to move backwards
 
-	void turn(float amount){direction = RotateY(amount) * vec4(direction.x, direction.y, direction.z, 1.0);}
-	void ascend(float amount){position = Translate(0, amount, 0) * vec4(position.x, position.y, position.z, 1.0);}
+	void turn(float amount);
+	void ascend(float amount);
 
 private:
 
