@@ -120,7 +120,7 @@ extern "C" void timerFunc(int value){
 
     GLuint time_per_frame = 12;
 
-    glutTimerFunc(time_per_frame, timerFunc, 0);
+    glutTimerFunc(time_per_frame, timerFunc(time_per_frame), 0);
 }
 
 extern "C" void keyboard(unsigned char key, int x, int y){
