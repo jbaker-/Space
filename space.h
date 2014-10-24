@@ -111,6 +111,7 @@ public:
 	vec4 get_position(){return position;}
 	vec4 get_direction(){return direction;}
 	vec4 get_up(){return up;}
+	float get_speed(){return speed;}
 
 	void advance_one_tick();
 
