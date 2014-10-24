@@ -4,7 +4,8 @@ CS 4250 Space Project Readme
 I think for the most part I have everything I can see debugged, everything compiles and runs but I'm not getting any output to the screen despite 
 having messed with it a whole heck of a lot.
 
-update 10/24/2014: I tried adding an output of the distance to zero to the downward movement function of the ship, and its outputting -NaN, which doesnt sound good
+update 10/24/2014: I tried adding an output of the distance to zero, the location, and the speed to the downward movement keyboard function of the ship, 
+and its outputting -NaN, which doesnt sound good - though I'm not sure how to fix it
 
 The code is organized into the shaders, the main.cc file, and space.h and .cc files, which contain:
 
