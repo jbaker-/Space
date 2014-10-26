@@ -1,66 +1,16 @@
+#include <space.h>
 #include <iostream>
-#include "space.h" //class definition for objects 
-#include "AngelCode/Angel.h"
+#include <Angel.h>
+
 using std::cout;
+using std::endl;
 
 int numpoints;
 
 vec4 *all_points; //pointer to array of all points in the scene
 vec4 *all_colors; //pointer to colors array
 
-solar_system ss; //the solar system, holds all the planets and other celestial bodies
-ship ship_1;          //the location of the camera
-
-GLint transformloc; //sent per object, per draw call
-GLint camloc;
-
-void myinit(){ //get points
-
-    //output functions for the objects ---> points[]
-
-    //once all points are present, give each object a starting index and an ending index to use in the draw() function
-    //also make sure each knows whether to use GL_TRIANGLES or GL_TRIANGLE_STRIP, etc 
-    //e.g. draw() leads to a call of glDrawArrays(primitivetype, start, end)
-
-    numpoints = ss.numpoints;
-
-    all_points = new vec4[numpoints];
-    all_colors = new vec4[numpoints];
-
-    int index = 0;
-
-    ss.star->set_begindex(index);
-
-    for (int i = 0; i < 36; i++){
-        all_points[index] = ss.star->get_point_at(index);
-        all_colors[index] = ss.star->get_color_at(index);
-        index++;
-    }
-
-    ss.star->set_endex(index);
-
-    for (int j = 0; j < 4; j++){
-
-        ss.planets[j].set_begindex(index);
-
-        for (int k = 0; k < 36; k++){
-            all_points[index] = ss.planets[j].get_point_at(k);
-            all_colors[index] = ss.planets[j].get_color_at(k);
-            index++;
-        }
-
-        ss.planets[j].set_endex(index - 1);
-    }
-
-    ss.moon->set_begindex(index);
-
-    for (int l = 0; l < 36; l++){
-        all_points[index] = ss.moon->get_point_at(l);
-        all_colors[index] = ss.moon->get_color_at(l);
-        index++;
-    }
-
-    ss.moon->set_endex(numpoints - 1);
+void init(){
 
 }
 
@@ -75,52 +25,42 @@ void init(){ //set up buffers, shaders
     GLuint buffer; //main buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
+
+
     //glBufferData()
    
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(all_points), all_points); //sub-buffers of points and colors
-    glBufferSubData(GL_ARRAY_BUFFER, sizeof(all_points), sizeof(all_points) + sizeof(all_colors), all_colors);
+    // glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(all_points), all_points); 
+    //sub-buffers of points and colors
+    // glBufferSubData(GL_ARRAY_BUFFER, sizeof(all_points), 
+    //          sizeof(all_points) + sizeof(all_colors), all_colors);
 
 
-    GLuint program = InitShader("vert_space.glsl", "frag_space.glsl");
-    glUseProgram(program); //initialize shaders
+    // GLuint program = InitShader("vert_space.glsl", "frag_space.glsl");
+    // glUseProgram(program); //initialize shaders
 
-    GLuint vPosition = glGetAttribLocation(program, "vPosition"); //vPosition
-    glEnableVertexAttribArray(vPosition);
-    glVertexAttribPointer(vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+    // GLuint vPosition = glGetAttribLocation(program, "vPosition"); //vPosition
+    // glEnableVertexAttribArray(vPosition);
+    // glVertexAttribPointer(vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 
-    GLuint vColor = glGetAttribLocation(program, "vColor");       //vColor
-    glEnableVertexAttribArray(vColor);
-    glVertexAttribPointer(vColor, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(all_points)));
+    // GLuint vColor = glGetAttribLocation(program, "vColor");       //vColor
+    // glEnableVertexAttribArray(vColor);
+    // glVertexAttribPointer(vColor, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(all_points)));
 
-    transformloc = glGetUniformLocation(program, "transform");
-    camloc = glGetUniformLocation(program, "camera");
+    // transformloc = glGetUniformLocation(program, "transform");
+    // camloc = glGetUniformLocation(program, "camera");
 
     glEnable(GL_DEPTH_TEST);
 
-
-    ss.set_transform_pointer_loc(transformloc);
 }
 
 extern "C" void display(){
 
     glClear(GL_COLOR_BUFFER_BIT);  
 
-    glUniformMatrix4fv(camloc, 1, GL_FALSE, LookAt(ship_1.get_position(), ship_1.get_direction(), ship_1.get_up()));
-
-    ss.draw_children();
+    //draw calls
 
     glFlush();
 
-}
-
-extern "C" void timerFunc(int value){
-
-    ss.advance_one_tick(); //move planets forward in time
-    ship_1.advance_one_tick();  //move ship forward (backward if s.speed < 0) on its course
-
-    GLuint time_per_frame = 12;
-
-    glutTimerFunc(time_per_frame, timerFunc, 0);
 }
 
 extern "C" void keyboard(unsigned char key, int x, int y){
@@ -133,42 +73,37 @@ extern "C" void keyboard(unsigned char key, int x, int y){
             exit(EXIT_SUCCESS); //escape key to exit
             break;
 
+        case 'w':
         case 'W':
-        case 'w': ship_1.ascend(.1);//up
-        break;
+            //press to go up
+            break;
 
+        case 's':
         case 'S':
-        case 's': ship_1.ascend(-.1); //down
-                  std::cout<< "distance from 0,0,0 = " << length(ship_1.get_position()) << std::endl
-                           << "current position = " << ship_1.get_position() << std::endl
-                           << "current direction = " << ship_1.get_direction() << std::endl
-                           << "speed = " << ship_1.get_speed() << std::endl;
-        break;
+            //press to go down
+            break;
 
+        case 'a':
         case 'A':
-        case 'a': ship_1.turn(-.1); //left
-        break;
+            //press to turn right
+            break;
 
+        case 'd':
         case 'D':
-        case 'd': ship_1.turn(.1); //right
-        break;
-
-        case 'M':
-        case 'm': ship_1.set_position(vec3( .5, .5, .5));
-                  ship_1.set_direction(normalize(vec3(-1, -1, -1)));
-        break;
-
-        case '+': ship_1.speed_up(); //apply positive thrust
-        break;
-
-        case '-': ship_1.slow_down();//apply negative thrust
-        break;
+            //press to turn left
+            break;
 
     }
 
     glutPostRedisplay();
 
 }
+
+extern "C" void timerFunc(int value){
+
+    glutTimerFunc(12, timerFunc, 0);
+}
+
 
 int main(int argc, char **argv){
 
@@ -193,5 +128,4 @@ int main(int argc, char **argv){
     return(EXIT_SUCCESS);
 
 }
-
 

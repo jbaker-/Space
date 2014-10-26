@@ -1,195 +1,95 @@
-#ifndef _SPACE_CC_
-#define _SPACE_CC_
-
-#include "space.h"
-#include <cstdlib>
+#include <space.h>
 
 //default shape for a celestial_body
-vec4 cube_coords[36] = {(-.5, .5, .5, 1.0f), ( .5, .5, .5, 1.0f), (-.5,-.5, .5, 1.0f), //first triangle
-                        ( .5, .5, .5, 1.0f), ( .5,-.5, .5, 1.0f), (-.5,-.5, .5, 1.0f),
-                        ( .5, .5, .5, 1.0f), ( .5, .5,-.5, 1.0f), ( .5,-.5, .5, 1.0f), 
-                        ( .5, .5,-.5, 1.0f), ( .5,-.5, .5, 1.0f), ( .5,-.5,-.5, 1.0f),
-                        ( .5, .5,-.5, 1.0f), ( .5,-.5,-.5, 1.0f), (-.5,-.5,-.5, 1.0f), // .
-                        ( .5, .5,-.5, 1.0f), (-.5, .5,-.5, 1.0f), (-.5,-.5,-.5, 1.0f), // .
-                        (-.5, .5,-.5, 1.0f), (-.5, .5, .5, 1.0f), (-.5,-.5,-.5, 1.0f), // .
-                        (-.5, .5, .5, 1.0f), (-.5,-.5,-.5, 1.0f), (-.5,-.5, .5, 1.0f),
-                        ( .5, .5, .5, 1.0f), (-.5, .5,-.5, 1.0f), (-.5, .5, .5, 1.0f),
-                        ( .5, .5, .5, 1.0f), ( .5, .5,-.5, 1.0f), (-.5, .5,-.5, 1.0f),
-                        ( .5,-.5, .5, 1.0f), ( .5,-.5,-.5, 1.0f), (-.5,-.5,-.5, 1.0f),
-                        ( .5,-.5, .5, 1.0f), (-.5,-.5,-.5, 1.0f), (-.5,-.5, .5, 1.0f)}; //last triangle
+vec4 cube_coords[36] = {(-1.0, 1.0, 1.0, 1.0f), ( 1.0, 1.0, 1.0, 1.0f), (-1.0,-1.0, 1.0, 1.0f), //first triangle
+                        ( 1.0, 1.0, 1.0, 1.0f), ( 1.0,-1.0, 1.0, 1.0f), (-1.0,-1.0, 1.0, 1.0f),
+                        ( 1.0, 1.0, 1.0, 1.0f), ( 1.0, 1.0,-1.0, 1.0f), ( 1.0,-1.0, 1.0, 1.0f), 
+                        ( 1.0, 1.0,-1.0, 1.0f), ( 1.0,-1.0, 1.0, 1.0f), ( 1.0,-1.0,-1.0, 1.0f),
+                        ( 1.0, 1.0,-1.0, 1.0f), ( 1.0,-1.0,-1.0, 1.0f), (-1.0,-1.0,-1.0, 1.0f), // .
+                        ( 1.0, 1.0,-1.0, 1.0f), (-1.0, 1.0,-1.0, 1.0f), (-1.0,-1.0,-1.0, 1.0f), // .
+                        (-1.0, 1.0,-1.0, 1.0f), (-1.0, 1.0, 1.0, 1.0f), (-1.0,-1.0,-1.0, 1.0f), // .
+                        (-1.0, 1.0, 1.0, 1.0f), (-1.0,-1.0,-1.0, 1.0f), (-1.0,-1.0, 1.0, 1.0f),
+                        ( 1.0, 1.0, 1.0, 1.0f), (-1.0, 1.0,-1.0, 1.0f), (-1.0, 1.0, 1.0, 1.0f),
+                        ( 1.0, 1.0, 1.0, 1.0f), ( 1.0, 1.0,-1.0, 1.0f), (-1.0, 1.0,-1.0, 1.0f),
+                        ( 1.0,-1.0, 1.0, 1.0f), ( 1.0,-1.0,-1.0, 1.0f), (-1.0,-1.0,-1.0, 1.0f),
+                        ( 1.0,-1.0, 1.0, 1.0f), (-1.0,-1.0,-1.0, 1.0f), (-1.0,-1.0, 1.0, 1.0f)}; //last triangle
 
-solar_system::solar_system(){
+/**************************************************************************** 
+	The class for the solar system - this holds all the planets, and any 
+	moons or stars present
+****************************************************************************/
+
+solar_system(GLuint tloc, int num, vec4 *points, vec4 *colors){
+
+	transformloc = tloc; 
+
+	numplanets = num;
+
+	sun = new celestial_body(points, colors, 0, NULL, 0, .1);
+
+	planets[0] = new celestial_body(points, colors, 36, sun, .2, .05);
+	planets[1] = new celestial_body(points, colors, 72, sun, .4, .03); //each uses the 36 points of the default cube
+	planets[2] = new celestial_body(points, colors, 108, sun, .6, .1);
+
+	moon = new celestial_body(points, colors, 144, planets[0], .1, .02);
+}
+
+void solar_system::advance(){
 
 
-    star = new celestial_body(10);
-    planets = new celestial_body[4];
-    moon = new celestial_body(1);
-
-
-
-    numpoints = star->get_numpoints();
-    numpoints += moon->get_numpoints();
-
-    for (int i = 0; i < 4; i++){
-        numpoints += planets[i].get_numpoints();
-    }
 
 }
 
-void solar_system::draw_children(){
+void solar_system::draw(){
 
-    planets[0].draw(transformlocation); //planet 1
-    planets[1].draw(transformlocation); //planet 2
-    planets[2].draw(transformlocation); //planet 3
-    planets[3].draw(transformlocation); //planet 4
+	sun.draw();
 
-    star->draw(transformlocation);      //the star
+	planets[0].draw();
+	planets[1].draw();
+	planets[2].draw();
 
-    moon->draw(transformlocation);   //moon around planet 1
-
-}
-
-void solar_system::advance_one_tick(){ //animates the movement of the planets - used in the timer function
-    
-    planets[0].increment_theta();
-    planets[0].set_translate(vec3(.3 * cos(planets[0].get_orbit_theta()), 0.0, .3 * sin(planets[0].get_orbit_theta()))); //kind of uses arbitrary radii
-    planets[0].set_rotate(vec3(0.0f, planets[0].get_rot_theta(), 0.0f));
-
-    planets[1].increment_theta();
-    planets[1].set_translate(vec3(.5 * cos(planets[1].get_orbit_theta()), 0.0, .6 * sin(planets[1].get_orbit_theta())));
-    planets[1].set_rotate(vec3(0.0f, planets[1].get_rot_theta(), 0.0f));
-
-    planets[2].increment_theta();
-    planets[2].set_translate(vec3(.9 * cos(planets[2].get_orbit_theta()), 0.0, .8 * sin(planets[2].get_orbit_theta())));
-    planets[2].set_rotate(vec3(0.0f, planets[2].get_rot_theta(), 0.0f));
-
-    planets[3].increment_theta();
-    planets[3].set_translate(vec3(1.2 * cos(planets[3].get_orbit_theta()), 0.0, 1.3 * sin(planets[3].get_orbit_theta())));
-    planets[3].set_rotate(vec3(0.0f, planets[3].get_rot_theta(), 0.0f));
-    
-    star->increment_theta();
-    star->set_translate(vec3(0.0, 0.0, 0.0)); 
-    star->set_rotate(vec3(0.0f, star->get_rot_theta(), 0.0f));
-    
-    moon->increment_theta();
-    moon->set_translate(vec3(planets[1].get_translate().x + .1 * cos(moon->get_orbit_theta()), 0, planets[1].get_translate().z + .12 * sin(moon->get_orbit_theta())));
-    moon->set_rotate(vec3(0.0f, moon->get_rot_theta(), 0.0f));
+	moon.draw();
 
 }
 
-celestial_body::celestial_body(float scale_factor){
+/****************************************************************************
+	The class for an individual celestial body (planet/moon/star)
+****************************************************************************/
 
-    srand(scale_factor);
+celestial_body::celestial_body(vec3 *points, vec3 *colors, int index, celestial_body *p, float orb_rad, float object_radius){
 
-    begindex = 0;
-    endex = 0;
+	parent = p;											//set parent
 
-    orbit_theta = 0.0;
-    orbit_theta_increment = .05 * (rand() % 40);
+	srand(object_radius);
 
-    rot_theta = 0.0;
-    rot_theta_increment = .01 * (rand() % 200);
+	rotate = vec3(0,0,0);	
+	translate = vec3(orb_rad, 0, 0);					//set values used by the transform
+	scale.x = scale.y = scale.z = object_radius;
 
-    numpoints = 36;
+	radius = orb_rad;									//set the radius
 
-    points = new vec4[36];
-    colors = new vec4[36]; 
+	vec4 color = (1/rand(), 1/rand(), 1/rand(), 1.0);	//generate a random color 
 
-    vec4 rand_color = vec4(rand(), rand(), rand(), 1.0f);
+	begindex = index;									//set indecies for draw()
+	endex = index + 35;
 
-    for (int i = 0; i < 36; i++){
-
-        points[i] = cube_coords[i];
-        colors[i] = rand_color;
-
-    }
-
-    numpoints = 36;
-
-    scale = scale_factor;
-
-    mat4 rx = RotateX(rotate.x);
-    mat4 ry = RotateY(rotate.y);
-    mat4 rz = RotateZ(rotate.z);
-
-    mat4 t = Translate(translate);
-    mat4 s = Scale(scale);
-
-    transform = t * rx * ry * rz * s;
-}
-
-void celestial_body::increment_theta(){
-
-    orbit_theta += orbit_theta_increment; 
-    rot_theta += rot_theta_increment;
+	for(int i = 0; i < 36; i++){
+		points[index + i] = cube_coords[i];				//put the points for the object into the points array
+		colors[index + i] = color;
+	}
 
 }
 
-vec4 celestial_body::get_point_at(int index){
+void celestial_body::draw(){
 
-    vec4 vec;
+	update_transform();
 
-    vec = points[index];
-
-    return vec;
+	glDrawArrays(GL_TRIANGLES, begindex, endex)
 
 }
 
-vec4 celestial_body::get_color_at(int index){
+void celestial_body::update_transform(){
 
-    vec4 vec;
-
-    vec = colors[index];
-
-    return vec;
+	transform = Translate(translate) * RotateX(rotate.x) * RotateY(rotate.y) * RotateZ(rotate.z) * Scale(scale) * identity();
 
 }
-
-void celestial_body::draw(GLint loc){
-
-    //calculate transform and send it as uniform mat4, then draw
-
-    mat4 scale_mat = Scale(scale); //set size
-    mat4 orient = RotateY(rotate.y);             //set orientation
-    mat4 locate = Translate(translate);          //set position
-
-    transform = locate * orient * scale_mat;     //gather into one mat4
-
-    glUniformMatrix4fv(loc, 1, GL_FALSE, transform); //send to GPU
-
-    glDrawArrays(GL_TRIANGLES, begindex, endex);     //draw
-
-}
-
-int celestial_body::get_numpoints(){
-    return numpoints;
-}
-
-ship::ship(){
-
-    position = vec4(1, 1, 1, 0);
-    direction = vec4(0.1, 0.1, 0.1, 0); //this may fix my current issue
-    up = vec4(0, 1, 0, 0);
-
-    speed = 0.1f;
-
-}
-
-void ship::advance_one_tick(){
-
-    position += normalize(direction) * speed;
-
-}
-
-void ship::turn(float amount){
-
-    direction = RotateY(amount) * vec4(direction.x, direction.y, direction.z, 1.0);
-
-}
-void ship::ascend(float amount){
-
-    position = Translate(0, amount, 0) * vec4(position.x, position.y, position.z, 1.0);
-
-}
-
-#endif
